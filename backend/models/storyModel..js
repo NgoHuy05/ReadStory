@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { slugMiddleware } from "../middlewares/slugMiddleware.js";
 
 const storySchema = new mongoose.Schema({
     title: { type: String, required: true },
@@ -11,6 +12,8 @@ const storySchema = new mongoose.Schema({
     status: { type: String, enum: ['ongoing', 'completed'], default: 'ongoing' },
     
 }, { timestamps: true });
+
+slugMiddleware(storySchema, "title");
 
 const Story = mongoose.model('Story', storySchema);
 export default Story;
