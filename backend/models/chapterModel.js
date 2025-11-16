@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const chapterSchema = new mongoose.Schema({
     storyId: { type: mongoose.Schema.Types.ObjectId, ref: 'Story', required: true },
@@ -10,4 +10,4 @@ const chapterSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const Chapter = mongoose.model('Chapter', chapterSchema);
-module.exports = Chapter;
+export default Chapter;

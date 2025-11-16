@@ -1,14 +1,17 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const morgan = require("morgan");
-const connectDB = require("./config/databaseConnect");
-const routers = require("./routes/index.route");
+import "dotenv/config"; 
+import express from "express";
+import cors from "cors";
+import morgan from "morgan";
+import connectDB from "./config/databaseConnect.js";
+import routers from "./routes/index.route.js";
 
 const app = express();
 const PORT = process.env.PORT || 5555;
+
+// Kết nối DB
 connectDB();
 
+// CORS
 app.use(
     cors({
         origin: [
@@ -17,10 +20,15 @@ app.use(
         ]
     })
 );
+
+// Middleware
 app.use(express.json());
 app.use(morgan("dev"));
+
+// Routers
 routers(app);
 
+// Start server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
