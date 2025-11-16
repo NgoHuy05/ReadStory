@@ -5,7 +5,7 @@ import { roleMiddleware } from "../middlewares/roleMiddleware.js";
 const router = express.Router();
 
 router.get('/me', authMiddleware ,getProfile);
-router.get('/list-user', authMiddleware, roleMiddleware(["admin"]) ,getListUser);
+router.get('/list', authMiddleware, roleMiddleware(["admin"]) ,getListUser);
 router.post('/update', authMiddleware, updateProfile);
 router.post('delete', authMiddleware, roleMiddleware(["admin"]), deleteUser);
 
