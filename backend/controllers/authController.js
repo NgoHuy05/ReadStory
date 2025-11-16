@@ -108,3 +108,25 @@ export const SignOut = async (req, res) => {
     }
 }
 
+export const RefreshToken = async (req, res) => {
+    try {
+        // lấy token trong cookie
+        const token = req?.cookies.refreshToken;
+        if (!token) {
+            return res.status(401).json({ message: "Không có token" });
+        }
+        // kiểm tra token trong database
+        const session = await Session.findOne({ refreshToken: token });
+        if (!session) {
+            return res.status(401).json({ message: "Token không hợp lệ" });
+        }
+        // tạo accessToken mới
+        const accessToken = jwt.sign({ userId: session.userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_TTL });
+
+        // trả accessToken về cho client 
+        return res.status(200).json({ accessToken });
+    } catch (error) {
+        console.error("Lỗi làm mới token");
+        res.status(500).json({ message: "Lỗi hệ thống" });
+    }
+}
