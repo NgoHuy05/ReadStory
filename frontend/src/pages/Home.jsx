@@ -213,12 +213,16 @@ const Home = () => {
   return (
     <main className="max-w-7xl mx-auto px-4 py-8 space-y-12">
       <section>
-        <h3 className="text-2xl font-bold mb-5">Truyện Hot</h3>
+        <h3
+          className="[font-size:var(--title-text)] font-bold mb-5"
+        >
+          Truyện Hot
+        </h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
           {truyenHot.map((truyen) => (
             <div
               key={truyen.id}
-              className="bg-black transition rounded-lg flex flex-col h-full"
+              className="bg-[var(--card-bg)] transition rounded-lg flex flex-col h-full"
             >
               <div className="relative">
                 <div className="bg-gray-300 h-[250px] w-full rounded flex items-center justify-center">
@@ -238,7 +242,7 @@ const Home = () => {
                 <h4 className="text-white text-lg font-semibold">
                   {truyen.title}
                 </h4>
-                <div className="flex justify-between items-center text-white/70 text-sm mt-2">
+                <div className="flex justify-between items-center text-white text-sm mt-2">
                   <div className="flex items-center gap-1">
                     <FaBook /> {truyen.totalChapters}
                   </div>
@@ -251,12 +255,12 @@ const Home = () => {
       </section>
 
       <section>
-        <h3 className="text-2xl font-bold mb-5">Truyện mới cập nhật</h3>
+        <h3 className="[font-size:var(--title-text)] font-bold mb-5">Truyện mới cập nhật</h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
           {truyenMoi.map((truyen) => (
             <div
               key={truyen.id}
-              className="bg-black transition rounded-lg flex flex-col h-full"
+              className="bg-[var(--card-bg)] transition rounded-lg flex flex-col h-full"
             >
               <div className="relative">
                 <div className="bg-gray-300 h-[250px] w-full rounded flex items-center justify-center">
@@ -276,7 +280,7 @@ const Home = () => {
                 <h4 className="text-white text-lg font-semibold">
                   {truyen.title}
                 </h4>
-                <div className="flex justify-between items-center text-white/70 text-sm mt-2">
+                <div className="flex justify-between items-center text-white text-sm mt-2">
                   <div className="flex items-center gap-1">
                     <FaBook /> {truyen.totalChapters}
                   </div>
@@ -288,15 +292,20 @@ const Home = () => {
         </div>
         <div className="flex items-center justify-center gap-2 mt-10 mb-10">
           <div className="flex-1 h-px bg-black"></div>
-          <div className="p-2 rounded-xl hover:bg-gray-200 transition cursor-pointer">Xem Thêm </div>
+          <div className="p-2 rounded-xl hover:bg-gray-200 transition cursor-pointer">
+            Xem Thêm
+          </div>
         </div>
       </section>
 
       <section>
-        <h3 className="text-2xl font-bold mb-5">Truyện đề xuất</h3>
+        <h3 className="[font-size:var(--title-text)] font-bold mb-5">Truyện đề xuất</h3>
         <div className="flex flex-col gap-4">
           {truyenDeXuat.map((truyen) => (
-            <div key={truyen.id} className="bg-gray-200 transition rounded-lg ">
+            <div
+              key={truyen.id}
+              className="bg-[var(--card-bg)] transition rounded-lg "
+            >
               <div className="flex h-full w-full gap-2">
                 <div className="bg-gray-300 h-[250px] w-[200px] rounded flex items-center justify-center">
                   <span>200x300</span>
@@ -316,7 +325,7 @@ const Home = () => {
                   <div className="text-xl font-bold">{truyen.title}</div>
                   {/* <div>category</div> */}
                   <div className="text-[15px]">{truyen.description}</div>
-                  <div className="px-4 py-2 rounded-xl w-[150px] bg-red-300 hover:bg-red-500 cursor-pointer">
+                  <div className="px-4 py-2 rounded-xl w-[150px] bg-red-500 hover:bg-red-400 cursor-pointer">
                     Đọc truyện ngay
                   </div>
                 </div>
@@ -329,12 +338,10 @@ const Home = () => {
 
           <div className="flex gap-2">
             <div className="p-2 rounded-full hover:bg-gray-200 transition cursor-pointer">
-              
               <IoIosArrowBack />
             </div>
             <div className="p-2 rounded-full hover:bg-gray-200 transition cursor-pointer">
-              
-            <IoIosArrowForward />
+              <IoIosArrowForward />
             </div>
           </div>
         </div>

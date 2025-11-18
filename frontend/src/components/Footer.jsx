@@ -4,7 +4,7 @@ const Footer = () => {
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
 
         <div>
-          <h2 className="text-2xl font-bold mb-3">Truyện Hay</h2>
+          <h2 className="text-2xl bg-[var(--footer-bg)] font-bold mb-3">Truyện Hay</h2>
           <p className="text-white/80 leading-relaxed">
             Nền tảng đọc truyện online miễn phí, cập nhật nhanh – trải nghiệm mượt mà.
           </p>
