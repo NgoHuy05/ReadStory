@@ -6,8 +6,9 @@ const MainLayout = () => {
     return (
         <>
         <Header />
-        <div className="bg-black">Main Layout</div>
-        <Outlet />
+        <div className="min-h-screen bg-white dark:bg-darkMode-800">
+            <Outlet />
+        </div>
         <Footer />
         </>
     );

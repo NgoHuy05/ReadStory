@@ -1,8 +1,183 @@
+import { useState } from "react";
+import { IoIosArrowDown, IoIosArrowUp, IoMdMenu } from "react-icons/io";
+
+const categorys = [
+  {
+    id: 1,
+    name: "Manhua",
+  },
+  {
+    id: 2,
+    name: "Manwa",
+  },
+  {
+    id: 3,
+    name: "Manga",
+  },
+];
+
+const sort = [
+  {
+    id: 1,
+    name: "Top yêu thích",
+  },
+  {
+    id: 2,
+    name: "Top lượt xem",
+  },
+  {
+    id: 3,
+    name: "Top ngày",
+  },
+  {
+    id: 4,
+    name: "Top Tuần",
+  },
+  {
+    id: 5,
+    name: "Top Tháng",
+  },
+  {
+    id: 6,
+    name: "Truyện mới",
+  },
+];
+
+const status = [
+  {
+    id: 1,
+    name: "Đang hoàn thành",
+  },
+  {
+    id: 2,
+    name: "Đã hoàn thành",
+  },
+];
 const Header = () => {
-    return (
-        <header>
-            <div>Header Section</div>
-        </header>
-    );
-}
+  const [dropdown, setDropDown] = useState(null);
+
+  const handleDropdown = (type) => {
+    setDropDown((prev) => (prev === type ? null : type));
+  };
+
+  return (
+    <header className="bg-[var(--header-bg)] text-white shadow-lg">
+      <div className="max-w-7xl mx-auto h-[70px] flex items-center justify-between px-4">
+        <div className="flex items-center gap-3">
+          <div className="text-3xl font-bold">📚</div>
+          <h1 className="text-2xl font-semibold">Truyện Hay</h1>
+        </div>
+
+        <nav className="hidden lg:flex items-center gap-6">
+          <div
+            onClick={() => handleDropdown("Type")}
+            className={`relative flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition ${dropdown === "Type" ? "bg-white/10" : ""}`}
+          >
+            <span>Thể loại</span>
+
+            {dropdown === "Type" ? (
+              <>
+                <span>
+                  <IoIosArrowUp />
+                </span>
+                <div
+                  className="absolute left-0 top-full mt-5 bg-[var(--header-bg)] p-3 rounded-lg shadow-lg grid grid-cols-2 gap-2 z-50 w-max"
+                >
+                  {categorys.map((cat) => (
+                    <div
+                      key={cat.id}
+                      className="hover:bg-white/10 px-3 py-2 rounded cursor-pointer"
+                    >
+                      {cat.name}
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <span>
+                <IoIosArrowDown />
+              </span>
+            )}
+          </div>
+
+          <div
+            onClick={() => handleDropdown("Sort")}
+            className={`relative flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition ${dropdown === "Sort" ? "bg-white/10" : ""}`}
+          >
+            <span>Sắp xếp</span>
+            {dropdown === "Sort" ? (
+              <>
+                <span>
+                  <IoIosArrowUp />
+                </span>
+                <div
+                  className="absolute left-0 top-full mt-5 bg-[#1b253a] p-3 rounded-lg shadow-lg grid grid-cols-2 gap-2 z-50 w-max"
+                >
+                  {sort.map((s) => (
+                    <div
+                      key={s.id}
+                      className="hover:bg-white/10 px-3 py-2 rounded cursor-pointer"
+                    >
+                      {s.name}
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <span>
+                <IoIosArrowDown />
+              </span>
+            )}
+          </div>
+
+          <div
+            onClick={() => handleDropdown("Status")}
+            className={`relative flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition ${dropdown === "Status" ? "bg-white/10" : ""}`}
+          >
+            <span>Trạng thái</span>
+            {dropdown === "Status" ? (
+              <>
+                <span>
+                  <IoIosArrowUp />
+                </span>
+                <div
+                  className="absolute left-0 top-full mt-5 bg-[#1b253a] p-3 rounded-lg shadow-lg gap-2 z-50 w-max"
+                >
+                  {status.map((s) => (
+                    <div
+                      key={s.id}
+                      className="hover:bg-white/10 px-3 py-2 rounded cursor-pointer"
+                    >
+                      {s.name}
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <span>
+                <IoIosArrowDown />
+              </span>
+            )}
+          </div>
+        </nav>
+
+        <div className="hidden lg:flex items-center gap-3">
+          <input
+            type="text"
+            placeholder="Tìm kiếm truyện..."
+            className="px-4 py-2 rounded-full bg-white text-black w-[180px] md:w-[250px] focus:outline-none"
+          />
+          <div className="px-4 py-2 bg-sky-700 hover:bg-sky-800 rounded-lg cursor-pointer  transition">
+            Đăng nhập
+          </div>
+        </div>
+
+        <div className="flex lg:hidden items-center text-2xl px-4 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition">
+          <IoMdMenu />
+        </div>
+      </div>
+    </header>
+  );
+};
+
 export default Header;
