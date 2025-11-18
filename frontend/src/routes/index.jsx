@@ -15,7 +15,8 @@ export const routers = createBrowserRouter([
             },
             {      
                 element: <Story />,
-                path: "story/:slugStory",
+                path: "story",
+                // path: "story/:slugStory",
             },
             {
                 element: <Chapter />,

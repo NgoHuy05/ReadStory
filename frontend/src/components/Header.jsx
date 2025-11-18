@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp, IoMdMenu } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const categorys = [
   {
@@ -55,7 +56,7 @@ const status = [
 ];
 const Header = () => {
   const [dropdown, setDropDown] = useState(null);
-
+  const navigate = useNavigate();
   const handleDropdown = (type) => {
     setDropDown((prev) => (prev === type ? null : type));
   };
@@ -63,7 +64,7 @@ const Header = () => {
   return (
     <header className="bg-[var(--header-bg)] text-white shadow-lg">
       <div className="max-w-7xl mx-auto h-[70px] flex items-center justify-between px-4">
-        <div className="flex items-center gap-3">
+        <div onClick={() => navigate('/')} className="flex items-center gap-3 cursor-pointer">
           <div className="text-3xl font-bold">📚</div>
           <h1 className="text-2xl font-semibold">Truyện Hay</h1>
         </div>

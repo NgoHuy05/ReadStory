@@ -6,7 +6,7 @@ const MainLayout = () => {
     return (
         <>
         <Header />
-        <div className="min-h-screen bg-white dark:bg-darkMode-800">
+        <div className="min-h-screen bg-[var(--main-bg)] text-white dark:bg-darkMode-800 py-4">
             <Outlet />
         </div>
         <Footer />
