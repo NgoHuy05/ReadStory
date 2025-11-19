@@ -13,17 +13,27 @@ const Footer = () => {
         <div>
           <h3 className="font-semibold text-lg mb-3">Thông tin</h3>
           <ul className="space-y-2 text-white/80">
-            <li className="hover:text-white cursor-pointer transition">Giới thiệu</li>
-            <li className="hover:text-white cursor-pointer transition">Chính sách bảo mật</li>
-            <li className="hover:text-white cursor-pointer transition">Điều khoản sử dụng</li>
-            <li className="hover:text-white cursor-pointer transition">Liên hệ</li>
+            <li className="hover:text-white cursor-pointer transition">
+              <a href="/about">Giới thiệu</a>
+              </li>
+            <li className="hover:text-white cursor-pointer transition">
+              <a href="/privacy">Chính sách bảo mật</a>
+              </li>
+            <li className="hover:text-white cursor-pointer transition">
+              <a href="/terms">Điều khoản sử dụng</a>
+              </li>
+            <li className="hover:text-white cursor-pointer transition">
+              <a href="/contact">Liên hệ</a>
+              </li>
           </ul>
         </div>
 
         <div>
           <h3 className="font-semibold text-lg mb-3">Kết nối</h3>
           <ul className="space-y-2 text-white/80">
-            <li className="hover:text-white cursor-pointer transition">Facebook</li>
+            <li className="hover:text-white cursor-pointer transition"> 
+              <a href="https://www.facebook.com/profile.php?id=61579054337647">Facebook</a>
+              </li>
             <li className="hover:text-white cursor-pointer transition">Email</li>
           </ul>
         </div>
