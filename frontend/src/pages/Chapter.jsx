@@ -48,10 +48,10 @@ const Chapter = () => {
   return (
     <main className="relative">
       <nav className="flex px-5 pb-5 pt-1 gap-2">
-        <a href="/" className="text-red-500">
+        <Link to="/" className="text-red-500">
           Trang chủ
-        </a>
-        <a href={`/story`}> / {truyenHot.title}</a>
+        </Link>
+        <Link to={`/story`}> / {truyenHot.title}</Link>
         <div> / {truyenHot.chapter[0].title}</div>
       </nav>
 

@@ -1,7 +1,7 @@
 import { FaEye, FaHeart, FaRegCommentDots, FaBook } from "react-icons/fa";
 import { TbEyeCheck } from "react-icons/tb";
 import Comment from "../components/Comment";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const truyenHot = {
   id: 1,
   title: "Thanh Kiếm Huyễn Thú",
@@ -44,9 +44,9 @@ const Story = () => {
   return (
     <main>
       <nav className="flex px-5 pb-5 pt-1 gap-2">
-        <a href="/" className="text-red-500">
+        <Link to="/" className="text-red-500">
           Trang chủ
-        </a>
+        </Link>
         <div> / {truyenHot.title}</div>
       </nav>
 

@@ -7,6 +7,8 @@ import Terms from "../pages/Terms";
 import Contact from "../pages/Contact";
 import PrivatePolicy from "../pages/PrivatePolicy";
 import About from "../pages/About";
+import SignIn from "../pages/Auth/SignIn";
+import SignUp from "../pages/Auth/SignUp";
 
 export const routers = createBrowserRouter([
     {
@@ -44,6 +46,16 @@ export const routers = createBrowserRouter([
                 path: "contact",
             },
         ]
+    },
+    {
+        path: '/sign-in',
+        element: <SignIn />,
+    },
+    {
+        path: '/sign-up',
+        element: <SignUp />,
     }
+
+    
 ]);
 

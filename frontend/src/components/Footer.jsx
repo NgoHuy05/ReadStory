@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <footer className="bg-[var(--footer-bg)] text-white py-10 px-5">
@@ -14,16 +16,16 @@ const Footer = () => {
           <h3 className="font-semibold text-lg mb-3">Thông tin</h3>
           <ul className="space-y-2 text-white/80">
             <li className="hover:text-white cursor-pointer transition">
-              <a href="/about">Giới thiệu</a>
+              <Link to="/about">Giới thiệu /</Link>
               </li>
             <li className="hover:text-white cursor-pointer transition">
-              <a href="/privacy">Chính sách bảo mật</a>
+              <Link to="/privacy">Chính sách bảo mật</Link>
               </li>
             <li className="hover:text-white cursor-pointer transition">
-              <a href="/terms">Điều khoản sử dụng</a>
+              <Link to="/terms">Điều khoản sử dụng</Link>
               </li>
             <li className="hover:text-white cursor-pointer transition">
-              <a href="/contact">Liên hệ</a>
+              <Link to="/contact">Liên hệ</Link>
               </li>
           </ul>
         </div>
@@ -32,7 +34,7 @@ const Footer = () => {
           <h3 className="font-semibold text-lg mb-3">Kết nối</h3>
           <ul className="space-y-2 text-white/80">
             <li className="hover:text-white cursor-pointer transition"> 
-              <a href="https://www.facebook.com/profile.php?id=61579054337647">Facebook</a>
+              <Link to="https://www.facebook.com/profile.php?id=61579054337647">Facebook</Link>
               </li>
             <li className="hover:text-white cursor-pointer transition">Email</li>
           </ul>
