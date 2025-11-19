@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp, IoMdMenu } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
@@ -60,6 +60,17 @@ const Header = () => {
   const handleDropdown = (type) => {
     setDropDown((prev) => (prev === type ? null : type));
   };
+  const navRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setDropDown(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <header className="bg-[var(--header-bg)] text-white shadow-lg">
@@ -69,7 +80,7 @@ const Header = () => {
           <h1 className="text-2xl font-semibold">Truyện Hay</h1>
         </div>
 
-        <nav className="hidden lg:flex items-center gap-6">
+        <nav ref={navRef} className="hidden lg:flex items-center gap-6">
           <div
             onClick={() => handleDropdown("Type")}
             className={`relative flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition ${dropdown === "Type" ? "bg-white/10" : ""}`}
