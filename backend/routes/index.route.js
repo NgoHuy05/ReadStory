@@ -9,13 +9,13 @@ import storyCategoryRouter from './storyCategory.route.js';
 import authRouter from './auth.route.js';
 
 export default (app) => {
-    app.use('/auths', authRouter);
-    app.use('/users', userRouter);
-    app.use('/stories', storyRouter);
-    app.use('/story-categories', storyCategoryRouter);
-    app.use('/chapters', chapterRouter);
-    app.use('/histories', historyRouter);
-    app.use('/bookmarks', bookmarkRouter);
-    app.use('/comments', commentRouter);
-    app.use('/categories', categoryRouter);
+    app.use('/auth', authRouter);
+    app.use('/user', userRouter);
+    app.use('/story', storyRouter);
+    app.use('/story-category', storyCategoryRouter);
+    app.use('/chapter', chapterRouter);
+    app.use('/history', historyRouter);
+    app.use('/bookmark', bookmarkRouter);
+    app.use('/comment', commentRouter);
+    app.use('/category', categoryRouter);
 };
