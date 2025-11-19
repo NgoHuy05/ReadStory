@@ -14,13 +14,15 @@ connectDB();
 
 // CORS
 app.use(
-    cors({
-        origin: [
-            "http://localhost:5173",
-            "https://storyread-uet-kdqb.vercel.app"
-        ]
-    })
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://storyread-uet-kdqb.vercel.app"
+    ],
+    credentials: true, // bắt buộc khi frontend gửi cookie
+  })
 );
+
 
 // Middleware
 app.use(express.json());

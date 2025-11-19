@@ -9,11 +9,16 @@ const REFRESH_TOKEN_TTL = 14 * 24 * 60 * 60 * 1000; // 14 days
 
 export const SignUp = async (req, res) => {
     try {
-        const { username, email, password, fullName } = req.body;
+        const { username, fullname , email, password, repassword } = req.body;
         // chuẩn hóa dữ liệu
-        if (!username || !email || !password || !fullName) {
+        if (!username || !email || !password || !fullname) {
             return res.status(400).json({ message: "Chưa điền đầy đủ thông tin" });
         }
+
+        if (password !== repassword) {
+            return res.status(400).json({ message: "Mật khẩu không trùng nhau" });
+        }
+
         // kiểm tra người dùng tồn tại
         const existingUser = await User.findOne({
             $or: [{ email }, { username }]
@@ -28,10 +33,10 @@ export const SignUp = async (req, res) => {
         // lưu vào database
         await User.create({
             username,
+            fullname,
             email,
             password: hashPassword,
-            fullName,
-            displayName: fullName
+            displayName: fullname
         });
 
         return res.status(200).json({ message: "Đăng kí thành công" });
