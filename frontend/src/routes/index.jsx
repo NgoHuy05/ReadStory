@@ -20,7 +20,8 @@ export const routers = createBrowserRouter([
             },
             {
                 element: <Chapter />,
-                path: "story/:slugStory/:chapterSlug",
+                path: "story/chapter"
+                //path: "story/:slugStory/:chapterSlug",
             }
         ]
     }

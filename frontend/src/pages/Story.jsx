@@ -1,6 +1,7 @@
 import { FaEye, FaHeart, FaRegCommentDots, FaBook } from "react-icons/fa";
 import { TbEyeCheck } from "react-icons/tb";
-
+import Comment from "../components/Comment";
+import { useNavigate } from "react-router-dom";
 const truyenHot = {
   id: 1,
   title: "Thanh Kiếm Huyễn Thú",
@@ -39,6 +40,7 @@ const truyenHot = {
 };
 
 const Story = () => {
+  const navigate = useNavigate();
   return (
     <main>
       <nav className="flex px-5 pb-5 pt-1 gap-2">
@@ -115,7 +117,7 @@ const Story = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-5">
                 {truyenHot.chapter.map((c) => (
-                  <div className="flex gap-2 w-full bg-[#5d5e63] p-2 rounded-xl">
+                  <div onClick={() => navigate('/story/chapter')} className="flex gap-2 w-full bg-[#5d5e63] p-2 rounded-xl cursor-pointer hover:bg-[#5d5e63]/60">
                     <div className="flex [font-size:var(--icon-text)] justify-center items-center bg-red-500 px-6 py-2 rounded-xl">
                       <TbEyeCheck />
                     </div>
@@ -147,21 +149,8 @@ const Story = () => {
         </div>
       </section>
 
-      <section>
-        <div className="bg-[var(--card-bg)] max-w-7xl mx-auto px-4 py-2 rounded-xl">
-          <div className="flex flex-col gap-2">
-            <div className="[font-size:var(--title-text)]">Bình luận</div>
-            <div className="relative">
-              <textarea
-                className="w-full h-[100px] bg-white rounded-2xl text-black px-4 py-2 outline outline-none"
-                name="comment"
-                placeholder="Var nhau ít cho đời thêm vui"
-              ></textarea>
-              <button className="absolute bottom-0 right-0 mb-5 mr-5 px-4 py-2 bg-red-500 rounded-2xl hover:bg-red-400 transition duration-300 cursor-pointer ">Gửi</button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Comment />
+
     </main>
   );
 };

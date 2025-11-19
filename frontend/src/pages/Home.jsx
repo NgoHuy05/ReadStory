@@ -1,7 +1,7 @@
 import { FaEye, FaHeart } from "react-icons/fa";
 import { FaBook } from "react-icons/fa";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-
+import { useNavigate } from "react-router-dom";
 const truyenHot = [
   {
     id: 1,
@@ -210,19 +210,19 @@ const truyenMoi = [
 ];
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <main className="max-w-7xl mx-auto px-4 py-8 space-y-12">
       <section>
-        <h3
-          className="[font-size:var(--title-text)] font-bold mb-5"
-        >
+        <h3 className="[font-size:var(--title-text)] font-bold mb-5">
           Truyện Hot
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
           {truyenHot.map((truyen) => (
             <div
+              onClick={() => navigate("/story")}
               key={truyen.id}
-              className="bg-[var(--card-bg)] transition rounded-lg flex flex-col h-full"
+              className="bg-[var(--card-bg)] rounded-lg flex flex-col h-full hover:bg-[var(--card-bg)]/80 hover:scale-105 transition-all duration-300 cursor-pointer"
             >
               <div className="relative">
                 <div className="bg-gray-300 h-[250px] w-full rounded flex items-center justify-center">
@@ -255,12 +255,15 @@ const Home = () => {
       </section>
 
       <section>
-        <h3 className="[font-size:var(--title-text)] font-bold mb-5">Truyện mới cập nhật</h3>
+        <h3 className="[font-size:var(--title-text)] font-bold mb-5">
+          Truyện mới cập nhật
+        </h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
           {truyenMoi.map((truyen) => (
             <div
+              onClick={() => navigate("/story")}
               key={truyen.id}
-              className="bg-[var(--card-bg)] transition rounded-lg flex flex-col h-full"
+              className="bg-[var(--card-bg)] rounded-lg flex flex-col h-full hover:bg-[var(--card-bg)]/80 hover:scale-105 transition-all duration-300 cursor-pointer"
             >
               <div className="relative">
                 <div className="bg-gray-300 h-[250px] w-full rounded flex items-center justify-center">
@@ -299,12 +302,15 @@ const Home = () => {
       </section>
 
       <section>
-        <h3 className="[font-size:var(--title-text)] font-bold mb-5">Truyện đề xuất</h3>
+        <h3 className="[font-size:var(--title-text)] font-bold mb-5">
+          Truyện đề xuất
+        </h3>
         <div className="flex flex-col gap-4">
           {truyenDeXuat.map((truyen) => (
             <div
+              onClick={() => navigate('/story')}
               key={truyen.id}
-              className="bg-[var(--card-bg)] transition rounded-lg "
+              className="bg-[var(--card-bg)] rounded-lg flex flex-col h-full hover:bg-[var(--card-bg)]/80 hover:scale-105 transition-all duration-300 cursor-pointer"
             >
               <div className="flex h-full w-full gap-2">
                 <div className="bg-gray-300 h-[250px] w-[200px] rounded flex items-center justify-center">
