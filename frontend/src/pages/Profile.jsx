@@ -8,13 +8,14 @@ import {
 import { useSelector } from "react-redux";
 
 const Profile = () => {
-  const accessToken = useSelector(state => state.auth.accessToken)
+  const accessToken = useSelector((state) => state.auth.accessToken);
   const [display, setDisplay] = useState("Information");
   const [isEditing, setIsEditing] = useState(false);
   const [updateProfile] = useUpdateProfileMutation();
-const { data, isLoading } = useGetProfileQuery(undefined, {
-  skip: !accessToken, // skip query nếu chưa có accessToken
-});
+  const { data, isLoading } = useGetProfileQuery(undefined, {
+    skip: !accessToken,
+  });
+
   const [form, setForm] = useState({
     username: "",
     email: "",

@@ -10,57 +10,61 @@ import About from "../pages/About";
 import SignIn from "../pages/Auth/SignIn";
 import SignUp from "../pages/Auth/SignUp";
 import Profile from "../pages/Profile";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 export const routers = createBrowserRouter([
-    {
-        path: "/",
-        element: <MainLayout />,
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        element: <ProtectedRoute />,
         children: [
-            {
-                element: <Home />,
-                index: true,
-            },
-            {      
-                element: <Story />,
-                path: "story",
-                // path: "story/:slugStory",
-            },
-            {
-                element: <Chapter />,
-                path: "story/chapter"
-                //path: "story/:slugStory/:chapterSlug",
-            },
-            {
-                element: <Profile />,
-                path: "profile",
-            },
-            {
-                element: <About />,
-                path: "about",
-            },
-            {
-                element: <PrivatePolicy />,
-                path: "privacy",
-            },
-            {
-                element: <Terms />,
-                path: "terms",
-            },
-            {
-                element: <Contact />,
-                path: "contact",
-            },
-        ]
-    },
-    {
-        path: '/sign-in',
-        element: <SignIn />,
-    },
-    {
-        path: '/sign-up',
-        element: <SignUp />,
-    }
+          {
+            element: <Profile />,
+            path: "profile",
+          },
+        ],
+      },
+      {
+        element: <Home />,
+        index: true,
+      },
+      {
+        element: <Story />,
+        path: "story",
+        // path: "story/:slugStory",
+      },
+      {
+        element: <Chapter />,
+        path: "story/chapter",
+        //path: "story/:slugStory/:chapterSlug",
+      },
 
-    
+      {
+        element: <About />,
+        path: "about",
+      },
+      {
+        element: <PrivatePolicy />,
+        path: "privacy",
+      },
+      {
+        element: <Terms />,
+        path: "terms",
+      },
+      {
+        element: <Contact />,
+        path: "contact",
+      },
+    ],
+  },
+  {
+    path: "/sign-in",
+    element: <SignIn />,
+  },
+  {
+    path: "/sign-up",
+    element: <SignUp />,
+  },
 ]);
-
