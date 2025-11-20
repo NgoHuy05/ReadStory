@@ -9,7 +9,7 @@ const REFRESH_TOKEN_TTL = 14 * 24 * 60 * 60 * 1000; // 14 days
 
 export const SignUp = async (req, res) => {
     try {
-        const { username, fullname , email, password, repassword } = req.body;
+        const { username, fullname, email, password, repassword } = req.body;
         // chuẩn hóa dữ liệu
         if (!username || !email || !password || !fullname) {
             return res.status(400).json({ message: "Chưa điền đầy đủ thông tin" });
@@ -18,10 +18,11 @@ export const SignUp = async (req, res) => {
         if (password !== repassword) {
             return res.status(400).json({ message: "Mật khẩu không trùng nhau" });
         }
+        const emailNormalized = email.toLowerCase();
 
         // kiểm tra người dùng tồn tại
         const existingUser = await User.findOne({
-            $or: [{ email }, { username }]
+            $or: [{ email: emailNormalized }, { username }]
         });
         if (existingUser) {
             return res.status(400).json({ message: "Email hoặc username đã tồn tại" });
@@ -81,13 +82,19 @@ export const SignIn = async (req, res) => {
             expiresAt: new Date(Date.now() + REFRESH_TOKEN_TTL)
         });
 
-        // trả refreshToken cho cookie 
+        // res.cookie('refreshToken', refreshToken, {
+        //     httpOnly: true,
+        //     sameSite: 'none',
+        //     secure: true,
+        //     maxAge: REFRESH_TOKEN_TTL
+        // });
+
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            secure: true,
-            sameSite: "none",
+            sameSite: 'lax', // 'lax' để dev localhost gửi cookie
+            // secure: false, // bỏ secure khi dev HTTP
             maxAge: REFRESH_TOKEN_TTL
-        })
+        });
 
         // trả accessToken về cho client 
         return res.status(200).json({ message: `User ${user.displayName} đã đăng nhập thành công`, accessToken })
@@ -103,13 +110,14 @@ export const SignOut = async (req, res) => {
         const token = req?.cookies.refreshToken;
         if (token) {
             // xoá trong database
-            await Session.deleteOne({refreshToken: token});
+            await Session.deleteOne({ refreshToken: token });
             // xóa trong phiên đăng nhập
             res.clearCookie("refreshToken");
         }
+        res.status(200).json({ message: "Đã đăng xuất" });
     } catch {
         console.error("Lỗi đăng xuất");
-        res.status(500).json({message: "Lỗi hệ thống"});
+        res.status(500).json({ message: "Lỗi hệ thống" });
     }
 }
 
@@ -120,11 +128,17 @@ export const RefreshToken = async (req, res) => {
         if (!token) {
             return res.status(401).json({ message: "Không có token" });
         }
+
+
         // kiểm tra token trong database
         const session = await Session.findOne({ refreshToken: token });
         if (!session) {
             return res.status(401).json({ message: "Token không hợp lệ" });
         }
+        if (session.expiresAt < new Date()) {
+            return res.status(401).json({ message: "Token hết hạn" });
+        }
+
         // tạo accessToken mới
         const accessToken = jwt.sign({ userId: session.userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_TTL });
 

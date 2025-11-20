@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp, IoMdMenu } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { logOut } from "../redux/slice/authSlice";
+import { useSignOutMutation } from "../services/authApi";
 
 const categorys = [
   {
@@ -55,13 +58,15 @@ const status = [
   },
 ];
 const Header = () => {
+  const isLogin = useSelector((state) => state.auth.isLogin);
   const [dropdown, setDropDown] = useState(null);
+  const [signOut] = useSignOutMutation();
   const navigate = useNavigate();
   const handleDropdown = (type) => {
     setDropDown((prev) => (prev === type ? null : type));
   };
   const navRef = useRef();
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
@@ -72,10 +77,22 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleSignOut = async () => {
+    try {
+      await signOut().unwrap();
+      dispatch(logOut());
+    } catch (err) {
+      console.error("Đăng xuất thất bại", err);
+    }
+  };
+
   return (
     <header className="bg-[var(--header-bg)] text-white shadow-lg">
       <div className="max-w-7xl mx-auto h-[70px] flex items-center justify-between px-4">
-        <div onClick={() => navigate('/')} className="flex items-center gap-3 cursor-pointer">
+        <div
+          onClick={() => navigate("/")}
+          className="flex items-center gap-3 cursor-pointer"
+        >
           <div className="text-3xl font-bold">📚</div>
           <h1 className="text-2xl font-semibold">Truyện Hay</h1>
         </div>
@@ -83,7 +100,9 @@ const Header = () => {
         <nav ref={navRef} className="hidden lg:flex items-center gap-6">
           <div
             onClick={() => handleDropdown("Type")}
-            className={`relative flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition ${dropdown === "Type" ? "bg-white/10" : ""}`}
+            className={`relative flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition ${
+              dropdown === "Type" ? "bg-white/10" : ""
+            }`}
           >
             <span>Thể loại</span>
 
@@ -92,9 +111,7 @@ const Header = () => {
                 <span>
                   <IoIosArrowUp />
                 </span>
-                <div
-                  className="absolute left-0 top-full mt-5 bg-[var(--header-bg)] p-3 rounded-lg shadow-lg grid grid-cols-2 gap-2 z-50 w-max"
-                >
+                <div className="absolute left-0 top-full mt-5 bg-[var(--header-bg)] p-3 rounded-lg shadow-lg grid grid-cols-2 gap-2 z-50 w-max">
                   {categorys.map((cat) => (
                     <div
                       key={cat.id}
@@ -114,7 +131,9 @@ const Header = () => {
 
           <div
             onClick={() => handleDropdown("Sort")}
-            className={`relative flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition ${dropdown === "Sort" ? "bg-white/10" : ""}`}
+            className={`relative flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition ${
+              dropdown === "Sort" ? "bg-white/10" : ""
+            }`}
           >
             <span>Sắp xếp</span>
             {dropdown === "Sort" ? (
@@ -122,9 +141,7 @@ const Header = () => {
                 <span>
                   <IoIosArrowUp />
                 </span>
-                <div
-                  className="absolute left-0 top-full mt-5 bg-[#1b253a] p-3 rounded-lg shadow-lg grid grid-cols-2 gap-2 z-50 w-max"
-                >
+                <div className="absolute left-0 top-full mt-5 bg-[#1b253a] p-3 rounded-lg shadow-lg grid grid-cols-2 gap-2 z-50 w-max">
                   {sort.map((s) => (
                     <div
                       key={s.id}
@@ -144,7 +161,9 @@ const Header = () => {
 
           <div
             onClick={() => handleDropdown("Status")}
-            className={`relative flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition ${dropdown === "Status" ? "bg-white/10" : ""}`}
+            className={`relative flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition ${
+              dropdown === "Status" ? "bg-white/10" : ""
+            }`}
           >
             <span>Trạng thái</span>
             {dropdown === "Status" ? (
@@ -152,9 +171,7 @@ const Header = () => {
                 <span>
                   <IoIosArrowUp />
                 </span>
-                <div
-                  className="absolute left-0 top-full mt-5 bg-[#1b253a] p-3 rounded-lg shadow-lg gap-2 z-50 w-max"
-                >
+                <div className="absolute left-0 top-full mt-5 bg-[#1b253a] p-3 rounded-lg shadow-lg gap-2 z-50 w-max">
                   {status.map((s) => (
                     <div
                       key={s.id}
@@ -179,9 +196,29 @@ const Header = () => {
             placeholder="Tìm kiếm truyện..."
             className="px-4 py-2 rounded-full bg-white text-black w-[180px] md:w-[250px] focus:outline-none"
           />
-          <div className="px-4 py-2 bg-sky-700 hover:bg-sky-800 rounded-lg cursor-pointer  transition">
-            Đăng nhập
-          </div>
+          {!isLogin ? (
+            <Link
+              to="/sign-in"
+              className="px-4 py-2 bg-sky-700 hover:bg-sky-800 rounded-lg cursor-pointer  transition"
+            >
+              Đăng nhập
+            </Link>
+          ) : (
+            <div className="flex gap-2 items-center">
+              <Link
+                to="/profile"
+                className="px-4 py-2 bg-sky-700 hover:bg-sky-800 rounded-lg cursor-pointer  transition"
+              >
+                Profile
+              </Link>
+              <button
+                className="px-4 py-2 bg-red-300 cursor-pointer"
+                onClick={handleSignOut}
+              >
+                Dang xuat
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="flex lg:hidden items-center text-2xl px-4 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition">

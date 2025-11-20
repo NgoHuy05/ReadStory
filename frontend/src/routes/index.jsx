@@ -9,6 +9,7 @@ import PrivatePolicy from "../pages/PrivatePolicy";
 import About from "../pages/About";
 import SignIn from "../pages/Auth/SignIn";
 import SignUp from "../pages/Auth/SignUp";
+import Profile from "../pages/Profile";
 
 export const routers = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ export const routers = createBrowserRouter([
                 element: <Chapter />,
                 path: "story/chapter"
                 //path: "story/:slugStory/:chapterSlug",
+            },
+            {
+                element: <Profile />,
+                path: "profile",
             },
             {
                 element: <About />,

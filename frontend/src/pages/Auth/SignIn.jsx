@@ -19,8 +19,7 @@ const SignIn = () => {
         return;
       }
       const res = await signIn(form).unwrap();
-      dispatch(setCredentials(res.accessToken));
-      localStorage.setItem("token", res.accessToken);
+      dispatch(setCredentials({ accessToken: res.accessToken }));
       navigate("/");
     } catch (error) {
       console.error("Lỗi đăng nhập", error);
@@ -32,8 +31,8 @@ const SignIn = () => {
     <div className="bg-[var(--main-bg)] text-white min-h-screen flex flex-col">
       <header className="bg-[var(--header-bg)] shadow-lg">
         <div className="max-w-7xl mx-auto h-[70px] flex items-center justify-between px-6">
-          <Link to='/'
-           
+          <Link
+            to="/"
             className="flex items-center gap-3 cursor-pointer select-none"
           >
             <div className="text-3xl">📚</div>
@@ -59,6 +58,7 @@ const SignIn = () => {
                 }
                 type="text"
                 placeholder="Nhập username"
+                autoComplete="username"
                 className="h-11 px-4 rounded-xl bg-[var(--card-hover-bg)] outline-none  focus:ring-2 focus:ring-red-500 transition"
               />
             </div>
@@ -71,6 +71,7 @@ const SignIn = () => {
                 }
                 type="password"
                 placeholder="Nhập mật khẩu"
+                autoComplete="current-password"
                 className="h-11 px-4 rounded-xl bg-[var(--card-hover-bg)] outline-none focus:ring-2 focus:ring-red-500 transition"
               />
             </div>
