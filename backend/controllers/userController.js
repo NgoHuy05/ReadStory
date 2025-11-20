@@ -36,29 +36,34 @@ export const getListUser = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try {
-        const id = req.user._id;
+        const id = req.user?._id;
+        if (!id) {
+            return res.status(400).json({ message: "Vui lòng đăng nhập" });
+        }
+
         const { displayName, fullName } = req.body;
 
-        if (!id) {
-            return res.status(400).json({ message: "Vui lòng đăng nhập" })
-        }
-
-        const user = await User.findByIdAndUpdate(id, {
-                displayName,
-                fullName
-            }, { new: true }
-        ).select("-password");
+        const user = await User.findByIdAndUpdate(
+            id,
+            { displayName, fullName },
+            { new: true }
+        );
 
         if (!user) {
-            return res.status(400).json({ message: "Người dùng không tồn tại", user })
+            return res.status(400).json({ message: "Người dùng không tồn tại" });
         }
 
-        return res.status(200).json({ message: "Cập nhật thông tin người dùng thành công" });
+        return res.status(200).json({
+            message: "Cập nhật thông tin người dùng thành công",
+            user,
+        });
+
     } catch (error) {
-        console.error("Lỗi cập nhật thông tin người dùng");
+        console.error(error);
         return res.status(500).json({ message: "Lỗi hệ thống" });
     }
-}
+};
+
 
 export const deleteUser = async (req, res) => {
     try {

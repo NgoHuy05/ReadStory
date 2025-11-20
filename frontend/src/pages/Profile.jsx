@@ -15,7 +15,6 @@ const Profile = () => {
   const { data, isLoading } = useGetProfileQuery(undefined, {
     skip: !accessToken,
   });
-
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -23,19 +22,38 @@ const Profile = () => {
     displayName: "",
   });
 
+  const [initialForm, setInitialForm] = useState({
+    username: "",
+    email: "",
+    fullName: "",
+    displayName: "",
+  });
+
   useEffect(() => {
-    if (data) {
+    if (data?.user) {
+      const init = {
+        username: data.user.username,
+        email: data.user.email,
+        fullName: data.user.fullName,
+        displayName: data.user.displayName,
+      };
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setForm({
-        username: data.user.username || "",
-        email: data.user.email || "",
-        fullName: data.user.fullName || "",
-        displayName: data.user.displayName || "",
-      });
+      setInitialForm(init);
+      setForm(init);
     }
   }, [data]);
 
   const handleDisplay = (type) => setDisplay(type);
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setForm(initialForm);
+  };
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+    setIsEditing(true);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,9 +63,20 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateProfile({ form });
-    } catch (error) {
-      console.error("Lỗi khi cập nhật thông tin", error);
+      await updateProfile({
+        fullName: form.fullName,
+        displayName: form.displayName,
+      }).unwrap();
+
+      setInitialForm((prev) => ({
+        ...prev,
+        fullName: form.fullName,
+        displayName: form.displayName,
+      }));
+
+      setIsEditing(false);
+    } catch (err) {
+      console.error("Lỗi cập nhật:", err);
     }
   };
 
@@ -56,6 +85,7 @@ const Profile = () => {
   return (
     <main>
       <div className="grid grid-cols-1 lg:grid-cols-[20%_75%] gap-5 ml-5">
+        
         <div className="flex lg:flex-col gap-2 bg-[var(--card-bg)] h-full lg:h-screen rounded-2xl px-4 py-2">
           <div
             onClick={() => handleDisplay("Information")}
@@ -100,7 +130,7 @@ const Profile = () => {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="font-bold">fullName</label>
+                <label className="font-bold">Full Name</label>
                 <input
                   name="fullName"
                   value={form.fullName}
@@ -111,7 +141,7 @@ const Profile = () => {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="font-bold">DisplayName</label>
+                <label className="font-bold">Display Name</label>
                 <input
                   name="displayName"
                   value={form.displayName}
@@ -121,11 +151,12 @@ const Profile = () => {
                 />
               </div>
 
+              {/* Buttons */}
               <div className="flex gap-2 mt-5 col-span-full">
                 {!isEditing ? (
                   <button
                     type="button"
-                    onClick={() => setIsEditing(true)}
+                    onClick={handleEdit}
                     className="px-4 py-2 bg-green-500 rounded-2xl hover:bg-green-400 transition"
                   >
                     Chỉnh sửa
@@ -133,15 +164,17 @@ const Profile = () => {
                 ) : (
                   <>
                     <button
-                      onClick={() => setIsEditing(false)}
                       type="submit"
                       className="px-4 py-2 bg-green-500 rounded-2xl hover:bg-green-400 transition"
                     >
                       Lưu
                     </button>
+
                     <button
                       type="button"
-                      onClick={() => setIsEditing(false)}
+                      onClick={() => {
+                        handleCancel();
+                      }}
                       className="px-4 py-2 bg-red-500 rounded-2xl hover:bg-red-400 transition"
                     >
                       Hủy

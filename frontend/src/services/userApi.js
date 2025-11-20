@@ -20,14 +20,14 @@ export const userApi = createApi({
                 url: '/user/delete',
                 method: 'POST',
                 body: { userId },
-            }),
+            })
+        }),
         refreshToken: builder.mutation({
                 query: () => ({
                     url: '/auth/refresh-token',
                     method: 'POST'
                 })
             })
-        }),
     }),
 });
 
