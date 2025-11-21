@@ -7,7 +7,7 @@ const initialState = {
 export const bookmarkSlice = createSlice({
     name: 'bookmark',
     initialState,
-    reducer:  {
+    reducers:  {
         test: (state, action) => {
             console.log(state.category, action.payload);
             

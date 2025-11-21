@@ -7,7 +7,7 @@ const initialState = {
 export const historySlice = createSlice({
     name: 'history',
     initialState,
-    reducer:  {
+    reducers:  {
         test: (state, action) => {
             console.log(state.category, action.payload);
             

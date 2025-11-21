@@ -7,7 +7,7 @@ const initialState = {
 export const categorySlice = createSlice({
     name: 'category',
     initialState,
-    reducer:  {
+    reducers:  {
         test: (state, action) => {
             console.log(state.category, action.payload);
             

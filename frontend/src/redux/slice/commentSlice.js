@@ -7,7 +7,7 @@ const initialState = {
 export const commentSlice = createSlice({
     name: 'comment',
     initialState,
-    reducer:  {
+    reducers:  {
         test: (state, action) => {
             console.log(state.category, action.payload);
             
