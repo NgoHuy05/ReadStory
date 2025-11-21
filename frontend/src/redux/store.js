@@ -9,6 +9,8 @@ import chapterReducer from "./slice/chapterSlice";
 import { chapterApi } from "../services/chapterApi";
 import categoryReducer from "./slice/categorySlice";
 import { categoryApi } from "../services/categoryApi";
+import storyCategoryReducer from "./slice/storyCategorySlice";
+import { storyCategoryApi } from "../services/storyCategoryApi";
 
 export const store = configureStore({
     reducer: {
@@ -22,6 +24,8 @@ export const store = configureStore({
         [chapterApi.reducerPath]: chapterApi.reducer,
         category: categoryReducer,
         [categoryApi.reducerPath]: categoryApi.reducer,
+        storyCategory: storyCategoryReducer,
+        [storyCategoryApi.reducerPath]: storyCategoryApi.reducer,
 
     },
     middleware: (getDefaultMiddleware) => 
