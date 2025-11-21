@@ -13,6 +13,8 @@ import storyCategoryReducer from "./slice/storyCategorySlice";
 import { storyCategoryApi } from "../services/storyCategoryApi";
 import bookmarkReducer from "./slice/bookmarkSlice";
 import { bookmarkApi } from "../services/bookmarkApi";
+import historyReducer from "./slice/historySlice";
+import { historyApi } from "../services/historyApi";
 
 export const store = configureStore({
     reducer: {
@@ -30,6 +32,9 @@ export const store = configureStore({
         [storyCategoryApi.reducerPath]: storyCategoryApi.reducer,
         bookmark: bookmarkReducer,
         [bookmarkApi.reducerPath]: bookmarkApi.reducer,
+        history: historyReducer,
+        [historyApi.reducerPath]: historyApi.reducer,
+        
 
     },
     middleware: (getDefaultMiddleware) => 
