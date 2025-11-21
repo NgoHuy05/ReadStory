@@ -24,13 +24,13 @@ export const authApi = createApi({
         }),
         signOut: builder.mutation({
             query: () => ({
-                url: 'sign-out',
+                url: '/sign-out',
                 method: 'POST'
             })
         }),
         refreshToken: builder.mutation({
             query: () => ({
-                url: 'refresh-token',
+                url: '/refresh-token',
                 method: 'POST'
             })
         })
