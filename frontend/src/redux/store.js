@@ -7,6 +7,8 @@ import storyReducer from "./slice/storySlice";
 import { storyApi } from "../services/storyApi";
 import chapterReducer from "./slice/chapterSlice";
 import { chapterApi } from "../services/chapterApi";
+import categoryReducer from "./slice/categorySlice";
+import { categoryApi } from "../services/categoryApi";
 
 export const store = configureStore({
     reducer: {
@@ -17,7 +19,10 @@ export const store = configureStore({
         story: storyReducer,
         [storyApi.reducerPath]: storyApi.reducer,
         chapter: chapterReducer,
-        [chapterApi.reducerPath]: chapterApi.reducer
+        [chapterApi.reducerPath]: chapterApi.reducer,
+        category: categoryReducer,
+        [categoryApi.reducerPath]: categoryApi.reducer,
+
     },
     middleware: (getDefaultMiddleware) => 
         getDefaultMiddleware()
@@ -25,5 +30,6 @@ export const store = configureStore({
             .concat(userApi.middleware)
             .concat(storyApi.middleware)
             .concat(chapterApi.middleware)
+            .concat(categoryApi.middleware)
     
 })
