@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../redux/slice/authSlice";
 import { useSignOutMutation } from "../services/authApi";
+import { FaUser, FaSearch } from "react-icons/fa";
 
 const categorys = [
   {
@@ -191,11 +192,16 @@ const Header = () => {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
-          <input
-            type="text"
-            placeholder="Tìm kiếm truyện..."
-            className="px-4 py-2 rounded-full bg-white text-black w-[180px] md:w-[250px] focus:outline-none"
-          />
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Tìm kiếm truyện..."
+              className="px-4 py-2 rounded-full bg-white text-black w-[180px] md:w-[250px] focus:outline-none"
+            />
+            <div className="absolute text-2xl right-2 top-2 text-black cursor-pointer">
+              <FaSearch />
+            </div>
+          </div>
           {!isLogin ? (
             <Link
               to="/sign-in"
@@ -204,20 +210,36 @@ const Header = () => {
               Đăng nhập
             </Link>
           ) : (
-            <div className="flex gap-2 items-center">
-              <Link
-                to="/profile"
-                className="px-4 py-2 bg-sky-700 hover:bg-sky-800 rounded-lg cursor-pointer  transition"
-              >
-                Profile
-              </Link>
-              <button
-                className="px-4 py-2 bg-red-300 cursor-pointer"
-                onClick={handleSignOut}
-              >
-                Dang xuat
-              </button>
-            </div>
+            <>
+              <div ref={navRef}  className="relative">
+                <div
+                  onClick={() => setDropDown("User")}
+                  className="text-2xl bg-red-500 rounded-full p-2 hover:bg-red-700 cursor-pointer"
+                >
+                  <FaUser />
+                </div>
+
+                {dropdown === "User" && (
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="absolute flex flex-col left-0 top-full mt-5 bg-[#1b253a] p-3 rounded-lg shadow-lg gap-2 z-50 w-max"
+                  >
+                    <Link
+                      to="/profile"
+                      className="px-4 py-2 bg-sky-700 hover:bg-sky-800 rounded-lg cursor-pointer transition"
+                    >
+                      Profile
+                    </Link>
+                    <button
+                      className="px-4 py-2 bg-red-700 hover:bg-red-800 rounded-lg cursor-pointer  transition"
+                      onClick={handleSignOut}
+                    >
+                      Dang xuat
+                    </button>
+                  </div>
+                )}
+              </div>
+            </>
           )}
         </div>
 

@@ -6,6 +6,7 @@ import {
 import { IoMdMenu } from "react-icons/io";
 import { FaArrowUp } from "react-icons/fa";
 import useScrollToTop from "../hooks/useScrollToTop";
+import { Link } from "react-router-dom";
 
 const truyenHot = {
   id: 1,

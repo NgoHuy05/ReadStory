@@ -157,7 +157,7 @@ const Profile = () => {
                   <button
                     type="button"
                     onClick={handleEdit}
-                    className="px-4 py-2 bg-green-500 rounded-2xl hover:bg-green-400 transition"
+                    className="px-4 py-2 bg-green-500 rounded-2xl hover:bg-green-400 cursor-pointer transition"
                   >
                     Chỉnh sửa
                   </button>
@@ -165,7 +165,7 @@ const Profile = () => {
                   <>
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-green-500 rounded-2xl hover:bg-green-400 transition"
+                      className="px-4 py-2 bg-green-500 rounded-2xl hover:bg-green-400 cursor-pointer transition"
                     >
                       Lưu
                     </button>
@@ -175,7 +175,7 @@ const Profile = () => {
                       onClick={() => {
                         handleCancel();
                       }}
-                      className="px-4 py-2 bg-red-500 rounded-2xl hover:bg-red-400 transition"
+                      className="px-4 py-2 bg-red-500 rounded-2xl hover:bg-red-400 cursor-pointer transition"
                     >
                       Hủy
                     </button>
