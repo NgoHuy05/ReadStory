@@ -15,6 +15,8 @@ import bookmarkReducer from "./slice/bookmarkSlice";
 import { bookmarkApi } from "../services/bookmarkApi";
 import historyReducer from "./slice/historySlice";
 import { historyApi } from "../services/historyApi";
+import commentReducer from "./slice/commentSlice";
+import { commentApi } from "../services/commentApi";
 
 export const store = configureStore({
     reducer: {
@@ -34,7 +36,9 @@ export const store = configureStore({
         [bookmarkApi.reducerPath]: bookmarkApi.reducer,
         history: historyReducer,
         [historyApi.reducerPath]: historyApi.reducer,
-        
+        comment: commentReducer,
+        [commentApi.reducerPath]: commentApi.reducer,
+
 
     },
     middleware: (getDefaultMiddleware) => 
