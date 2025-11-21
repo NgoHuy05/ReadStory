@@ -14,12 +14,13 @@ export const storyCategoryApi = createApi({
             })
         }),
         deleteStoryCategory: builder.mutation({
-            query: (id) => ({
+            query: (data) => ({
                 url: '/storyCategory/delete',
                 method: 'POST',
-                body: {id}
+                body: data
             })
-        }),
+        })
+
     })
 })
 

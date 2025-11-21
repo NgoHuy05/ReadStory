@@ -14,10 +14,10 @@ export const bookmarkApi = createApi({
             })
         }),
         deleteBookmark: builder.mutation({
-            query: (id) => ({
+            query: (storyId) => ({
                 url: '/bookmark/delete',
                 method: 'POST',
-                body: {id}
+                body: {storyId}
             })
         }),
     })

@@ -14,10 +14,10 @@ export const commentApi = createApi({
             })
         }),
         deleteComment: builder.mutation({
-            query: (id) => ({
+            query: (commentId ) => ({
                 url: '/comment/delete',
                 method: 'POST',
-                body: {id}
+                body: {commentId }
             })
         }),
     })

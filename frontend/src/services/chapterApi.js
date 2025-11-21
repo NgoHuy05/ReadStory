@@ -6,7 +6,7 @@ export const chapterApi = createApi({
     baseQuery: baseQueryWithReauth,
     tagTypes: ['chapter'],
     endpoints: (builder) => ({
-        getListChapterByStory: builder.query({ query: (slugStory) => `/chapter/${slugStory}` }),
+        getListChapterByStory: builder.query({ query: (slugStory) => `/chapter/list/${slugStory}` }),
         getDetailChapter: builder.query({ query: (slugChapter) => `/chapter/${slugChapter}` }),
         createChapter: builder.mutation({
             query: (data) => ({
