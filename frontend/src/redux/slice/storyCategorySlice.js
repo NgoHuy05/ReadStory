@@ -5,7 +5,7 @@ const initialState = {
 }
 
 export const storyCategorySlice = createSlice({
-    name: 'category',
+    name: 'storyCategory',
     initialState,
     reducer:  {
         test: (state, action) => {
