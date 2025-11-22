@@ -1,4 +1,3 @@
-import Comment from "../components/Comment";
 import {
   IoIosArrowBack,
   IoIosArrowForward,
@@ -7,6 +6,7 @@ import { IoMdMenu } from "react-icons/io";
 import { FaArrowUp } from "react-icons/fa";
 import useScrollToTop from "../hooks/useScrollToTop";
 import { Link } from "react-router-dom";
+import { CommentChapter } from "../components/Comment";
 
 const truyenHot = {
   id: 1,
@@ -92,7 +92,7 @@ const Chapter = () => {
       <button onClick={useScrollToTop} className="hidden md:flex p-2 bg-[var(--card-bg)] fixed bottom-0 right-0 mr-5 mb-5 rounded-full hover:bg-[var(--card-bg)]/60 transition duration-300 cursor-pointer">
         <FaArrowUp />
       </button>
-      <Comment />
+      <CommentChapter chapterId={truyenHot.chapter[0].id} storyId={truyenHot.id} />
     </main>
   );
 };

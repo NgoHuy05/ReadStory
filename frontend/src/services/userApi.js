@@ -22,12 +22,6 @@ export const userApi = createApi({
                 body: { userId },
             })
         }),
-        refreshToken: builder.mutation({
-                query: () => ({
-                    url: '/auth/refresh-token',
-                    method: 'POST'
-                })
-            })
     }),
 });
 
@@ -36,5 +30,4 @@ export const {
     useGetListUserQuery,
     useUpdateProfileMutation,
     useDeleteUserMutation,
-    useRefreshTokenMutation,
 } = userApi

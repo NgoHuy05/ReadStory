@@ -1,5 +1,25 @@
 import Comment from "../models/commentModel.js";
 
+export const getListCommentByChapter = async (req, res) => {
+    try {
+        const {chapterId} = req.params;
+        const comments = Comment.find(chapterId);
+        return res.status(200).json({message: "Lấy danh sách bình luận theo chương thành công", comments});
+    } catch (error) {
+        return res.status(500).json({message: "Lỗi hệ thống"});
+    }
+}
+
+export const getListCommentByStory = async (req, res) => {
+    try {
+        const {storyId} = req.params;
+        const comments = Comment.find(storyId);
+        return res.status(200).json({message: "Lấy danh sách bình luận theo truyện thành công", comments});
+    } catch (error) {
+        return res.status(500).json({message: "Lỗi hệ thống"});
+    }
+}
+
 export const createComment = async (req, res) => {
     try {
         const id = req.user._id;
@@ -8,7 +28,7 @@ export const createComment = async (req, res) => {
         const comment = await Comment.create({
             userId: id,
             storyId,
-            chapterId,
+            chapterId: chapterId || null,
             content
         });
 

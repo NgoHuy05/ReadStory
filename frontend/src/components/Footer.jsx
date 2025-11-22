@@ -16,7 +16,7 @@ const Footer = () => {
           <h3 className="font-semibold text-lg mb-3">Thông tin</h3>
           <ul className="space-y-2 text-white/80">
             <li className="hover:text-white cursor-pointer transition">
-              <Link to="/about">Giới thiệu /</Link>
+              <Link to="/about">Giới thiệu </Link>
               </li>
             <li className="hover:text-white cursor-pointer transition">
               <Link to="/privacy">Chính sách bảo mật</Link>

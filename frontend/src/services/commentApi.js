@@ -6,6 +6,19 @@ export const commentApi = createApi({
     baseQuery: baseQueryWithReauth,
     tagTypes: ['comment'],
     endpoints: (builder) => ({
+        getListCommentByChapter: builder.query({
+            query: (chapterId) => ({
+                url: `/comment/list/chapter/${chapterId}`,
+                method: 'GET'
+            })
+        }),
+        getListCommentByStory: builder.query({
+            query: (storyId) => ({
+                url: `/comment/list/story/${storyId}`,
+                method: 'GET'
+            })
+        }),
+
         createComment: builder.mutation({
             query: (data) => ({
                 url: '/comment/create',
@@ -24,6 +37,8 @@ export const commentApi = createApi({
 })
 
 export const {
+    useGetListCommentByChapterQuery,
+    useGetListCommentByStoryQuery,
     useCreateCommentMutation,
     useDeleteCommentMutation
 } = commentApi

@@ -48,5 +48,9 @@ export const store = configureStore({
             .concat(storyApi.middleware)
             .concat(chapterApi.middleware)
             .concat(categoryApi.middleware)
+            .concat(storyCategoryApi.middleware)
+            .concat(bookmarkApi.middleware)
+            .concat(historyApi.middleware)
+            .concat(commentApi.middleware)
     
 })
