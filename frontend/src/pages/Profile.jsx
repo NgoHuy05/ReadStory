@@ -6,6 +6,7 @@ import {
   useUpdateProfileMutation,
 } from "../services/userApi";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const Profile = () => {
   const accessToken = useSelector((state) => state.auth.accessToken);
@@ -67,7 +68,7 @@ const Profile = () => {
         fullName: form.fullName,
         displayName: form.displayName,
       }).unwrap();
-
+      toast.success("Cập nhật thông tin thành công");
       setInitialForm((prev) => ({
         ...prev,
         fullName: form.fullName,
@@ -77,6 +78,7 @@ const Profile = () => {
       setIsEditing(false);
     } catch (err) {
       console.error("Lỗi cập nhật:", err);
+      toast.error(err?.data?.message || "Cập nhật thông tin thất bại");
     }
   };
 

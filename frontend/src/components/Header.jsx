@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../redux/slice/authSlice";
 import { useSignOutMutation } from "../services/authApi";
 import { FaUser, FaSearch } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const categorys = [
   {
@@ -63,11 +64,11 @@ const Header = () => {
   const [dropdown, setDropDown] = useState(null);
   const [signOut] = useSignOutMutation();
   const navigate = useNavigate();
+  const navRef = useRef();
+  const dispatch = useDispatch();
   const handleDropdown = (type) => {
     setDropDown((prev) => (prev === type ? null : type));
   };
-  const navRef = useRef();
-  const dispatch = useDispatch();
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
@@ -80,10 +81,12 @@ const Header = () => {
 
   const handleSignOut = async () => {
     try {
-      await signOut().unwrap();
+       await signOut().unwrap();
       dispatch(logOut());
+      toast.success("Đăng xuất thành công");
     } catch (err) {
       console.error("Đăng xuất thất bại", err);
+      toast.error(err?.data?.message || "Đăng xuất thất bại");
     }
   };
 

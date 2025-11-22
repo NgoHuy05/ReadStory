@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSignInMutation } from "../../services/authApi";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../redux/slice/authSlice";
+import toast from "react-hot-toast";
 
 const SignIn = () => {
   const [form, setForm] = useState({ username: "", password: "" });
@@ -15,15 +16,16 @@ const SignIn = () => {
     e.preventDefault();
     try {
       if (!form.username || !form.password) {
-        alert("Vui lòng nhập đầy đủ thông tin");
+        toast.error("Vui lòng nhập đầy đủ thông tin");
         return;
       }
       const res = await signIn(form).unwrap();
       dispatch(setCredentials({ accessToken: res.accessToken }));
+      toast.success("Đăng nhập thành công");
       navigate("/");
     } catch (error) {
       console.error("Lỗi đăng nhập", error);
-      if (error.data) alert(error.data.message || "Đăng nhập thất bại");
+      toast.error(error?.data?.message || "Lỗi đăng nhập");
     }
   };
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignUpMutation } from "../../services/authApi";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -23,19 +24,20 @@ const SignUp = () => {
       !form.password ||
       !form.repassword
     ) {
-      alert("Vui lòng nhập đầy đủ thông tin");
+      toast.error("Vui lòng nhập đầy đủ thông tin");
       return;
     }
     if (form.password !== form.repassword) {
-      alert("Mật khẩu không trùng nhau");
+      toast.error("Mật khẩu không trùng nhau");
       return;
     }
     try {
       await signUp(form).unwrap();
+      toast.success("Đăng kí thành công");
       navigate("/sign-in");
     } catch (error) {
       console.error("Lỗi đăng kí", error);
-      if (error.data) alert(error.data.message || "Đăng ký thất bại");
+      toast.error(error?.data?.message || "Đăng ký thất bại");
     }
   };
 
