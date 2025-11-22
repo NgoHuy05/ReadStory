@@ -3,11 +3,10 @@ import { createComment, deleteComment, getListCommentByChapter, getListCommentBy
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
-router.get('/list/chapter/:chapterId', getListCommentByChapter),
-router.get('/list/story/:storyId', getListCommentByStory),
+router.get('/list/chapter/:slugChapter', getListCommentByChapter);
+router.get('/list/story/:slugStory', getListCommentByStory);
 
 router.post('/create', authMiddleware, createComment);
 router.post('/delete', authMiddleware, deleteComment);
-
 
 export default router;

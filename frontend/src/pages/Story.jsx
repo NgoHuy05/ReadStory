@@ -6,6 +6,7 @@ import { CommentStory } from "../components/Comment";
 const truyenHot = {
   id: 1,
   title: "Thanh Kiếm Huyễn Thú",
+  slug: "thanh-kiem-huyen-thu",
   description: "Hành trình săn thú và rèn luyện kiếm pháp.",
   author: "Nguyễn Huy",
   viewsCount: 12000,
@@ -15,6 +16,7 @@ const truyenHot = {
   chapter: [
     {
       title: "chuong 1",
+      slug: "chuong-1",
       content: "abc",
       chapterNumber: 1,
       viewsNumber: 0,
@@ -23,6 +25,7 @@ const truyenHot = {
     },
     {
       title: "chuong 2",
+      slug: "chuong-2",
       content: "abc",
       chapterNumber: 2,
       viewsNumber: 0,
@@ -31,6 +34,7 @@ const truyenHot = {
     },
     {
       title: "chuong 3",
+      slug: "chuong-3",
       content: "abc",
       chapterNumber: 3,
       viewsNumber: 0,
@@ -151,7 +155,7 @@ const Story = () => {
         </div>
       </section>
 
-      <CommentStory chapterId={truyenHot.id} />
+      <CommentStory slugStory={truyenHot.slug} />
 
     </main>
   );

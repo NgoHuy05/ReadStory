@@ -6,9 +6,9 @@ import {
 } from "../services/commentApi";
 import { useState } from "react";
 
-export const CommentStory = ({ storyId }) => {
+export const CommentStory = ({ slugStory }) => {
   const [content, setContent] = useState("");
-  const { data: comments } = useGetListCommentByStoryQuery(storyId);
+  const { data: comments } = useGetListCommentByStoryQuery(slugStory);
 
   const [createComment] = useCreateCommentMutation();
   const handleCreateComment = async () => {
@@ -18,7 +18,7 @@ export const CommentStory = ({ storyId }) => {
     }
 
     try {
-      await createComment({ storyId, content }).unwrap();
+      await createComment({ storySlug: slugStory, content }).unwrap();
       setContent("");
       toast.success("Bình luận thành công");
     } catch (err) {
@@ -53,9 +53,9 @@ export const CommentStory = ({ storyId }) => {
   );
 };
 
-export const CommentChapter = ({ storyId, chapterId }) => {
+export const CommentChapter = ({ slugStory, slugChapter }) => {
   const [content, setContent] = useState("");
-  const { data: comments } = useGetListCommentByChapterQuery(chapterId);
+  const { data: comments } = useGetListCommentByChapterQuery(slugChapter);
 
   const [createComment] = useCreateCommentMutation();
   const handleCreateComment = async () => {
@@ -65,7 +65,7 @@ export const CommentChapter = ({ storyId, chapterId }) => {
     }
 
     try {
-      await createComment({ storyId, chapterId, content }).unwrap();
+      await createComment({ storySlug: slugStory, chapterSlug: slugChapter, content }).unwrap();
       setContent("");
       toast.success("Bình luận thành công");
     } catch (err) {

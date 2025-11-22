@@ -47,7 +47,7 @@ export const updateProfile = async (req, res) => {
             id,
             { displayName, fullName },
             { new: true }
-        );
+        ).select("-password");
 
         if (!user) {
             return res.status(400).json({ message: "Người dùng không tồn tại" });

@@ -11,6 +11,7 @@ import { CommentChapter } from "../components/Comment";
 const truyenHot = {
   id: 1,
   title: "Thanh Kiếm Huyễn Thú",
+  slug: "thanh-kiem-huyen-thu",
   description: "Hành trình săn thú và rèn luyện kiếm pháp.",
   author: "Nguyễn Huy",
   viewsCount: 12000,
@@ -20,6 +21,7 @@ const truyenHot = {
   chapter: [
     {
       title: "chuong 1",
+      slug: "chuong-1",
       content: `abcasss`,
       chapterNumber: 1,
       viewsNumber: 0,
@@ -28,6 +30,8 @@ const truyenHot = {
     },
     {
       title: "chuong 2",
+      slug: "chuong-2",
+    
       content: "abc",
       chapterNumber: 2,
       viewsNumber: 0,
@@ -36,6 +40,7 @@ const truyenHot = {
     },
     {
       title: "chuong 3",
+      slug: "chuong-3",
       content: "abc",
       chapterNumber: 3,
       viewsNumber: 0,
@@ -92,7 +97,7 @@ const Chapter = () => {
       <button onClick={useScrollToTop} className="hidden md:flex p-2 bg-[var(--card-bg)] fixed bottom-0 right-0 mr-5 mb-5 rounded-full hover:bg-[var(--card-bg)]/60 transition duration-300 cursor-pointer">
         <FaArrowUp />
       </button>
-      <CommentChapter chapterId={truyenHot.chapter[0].id} storyId={truyenHot.id} />
+      <CommentChapter slugChapter={truyenHot.chapter[0].slug} slugStory={truyenHot.slug} />
     </main>
   );
 };
