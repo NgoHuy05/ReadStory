@@ -6,6 +6,12 @@ export const storyCategoryApi = createApi({
     baseQuery: baseQueryWithReauth,
     tagTypes: ['storyCategory'],
     endpoints: (builder) => ({
+        getListStoryCategory: builder.query({
+            query: () => ({
+                url: '/storyCategory/list',
+                method: 'GET'
+            }),
+        }),
         createStoryCategory: builder.mutation({
             query: (data) => ({
                 url: '/storyCategory/create',

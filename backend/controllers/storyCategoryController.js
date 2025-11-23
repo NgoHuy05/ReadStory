@@ -1,5 +1,15 @@
 import StoryCategory from "../models/storyCategoryModel.js";
 
+export const getListStoryCategory = async (req, res) => {
+    try {
+        const storyCategory = await StoryCategory.find().lean();
+        return res.status(200).json({ message: "Lấy danh sách storyCategory thành công", storyCategory })
+    } catch (error) {
+        console.error("Lỗi khi tạo storyCategory", error);
+        return res.status(500).json({ message: "Lỗi hệ thống" });
+    }
+}
+
 export const createStoryCategory = async (req, res) => {
     try {
         const { storyId, categoryId } = req.body;

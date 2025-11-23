@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { CommentStory } from "../components/Comment";
 
 const truyenHot = {
-  id: 1,
+  _id: 1,
   title: "Thanh Kiếm Huyễn Thú",
   slug: "thanh-kiem-huyen-thu",
   description: "Hành trình săn thú và rèn luyện kiếm pháp.",

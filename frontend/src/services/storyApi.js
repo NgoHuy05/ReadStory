@@ -7,6 +7,9 @@ export const storyApi = createApi({
     tagTypes: ['storyApi'],
     endpoints: (builder) => ({
         getListStory: builder.query({ query: () => '/story/list' }),
+        getListStoryNew: builder.query({ query: ({ page = 1 }) => `/story/list/new?page=${page}` }),
+        getListStoryHot: builder.query({ query: () => '/story/list/hot' }),
+        getListStoryRecommend: builder.query({ query: () => '/story/list/recommend' }),
         getDetailStory: builder.query({
             query: (slug) => `/story/${slug}`,
         }),
@@ -29,6 +32,9 @@ export const storyApi = createApi({
 
 export const {
     useGetListStoryQuery,
+    useGetListStoryHotQuery,
+    useGetListStoryNewQuery,
+    useGetListStoryRecommendQuery,
     useGetDetailStoryQuery,
     useCreateStoryMutation,
     useDeleteStoryMutation

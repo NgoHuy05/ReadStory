@@ -12,7 +12,7 @@ export default (app) => {
     app.use('/auth', authRouter);
     app.use('/user', userRouter);
     app.use('/story', storyRouter);
-    app.use('/story-category', storyCategoryRouter);
+    app.use('/storyCategory', storyCategoryRouter);
     app.use('/chapter', chapterRouter);
     app.use('/history', historyRouter);
     app.use('/bookmark', bookmarkRouter);

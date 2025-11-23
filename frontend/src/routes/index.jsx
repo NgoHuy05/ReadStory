@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home";
 import Story from "../pages/Story";
@@ -11,6 +11,7 @@ import SignIn from "../pages/Auth/SignIn";
 import SignUp from "../pages/Auth/SignUp";
 import Profile from "../pages/Profile";
 import ProtectedRoute from "../components/ProtectedRoute";
+import NewStory from "../pages/Story/NewStory";
 
 export const routers = createBrowserRouter([
   {
@@ -27,12 +28,21 @@ export const routers = createBrowserRouter([
         ],
       },
       {
+        element: <Navigate to='/home' replace /> ,
+        index: true
+      },
+      {
         element: <Home />,
-        index: true,
+        path: 'home'
       },
       {
         element: <Story />,
         path: "story",
+        // path: "story/:slugStory",
+      },
+      {
+        element: <NewStory />,
+        path: "list-new-story",
         // path: "story/:slugStory",
       },
       {
