@@ -79,9 +79,14 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleOpenProfile = (e) => {
+    e.stopPropagation();
+    setDropDown(null);
+  };
+
   const handleSignOut = async () => {
     try {
-       await signOut().unwrap();
+      await signOut().unwrap();
       dispatch(logOut());
       toast.success("Đăng xuất thành công");
     } catch (err) {
@@ -214,9 +219,9 @@ const Header = () => {
             </Link>
           ) : (
             <>
-              <div ref={navRef}  className="relative">
+              <div ref={navRef} className="relative">
                 <div
-                  onClick={() => setDropDown("User")}
+                  onClick={() => handleDropdown("User")}
                   className="text-2xl bg-red-500 rounded-full p-2 hover:bg-red-700 cursor-pointer"
                 >
                   <FaUser />
@@ -224,7 +229,7 @@ const Header = () => {
 
                 {dropdown === "User" && (
                   <div
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={handleOpenProfile}
                     className="absolute flex flex-col left-0 top-full mt-5 bg-[#1b253a] p-3 rounded-lg shadow-lg gap-2 z-50 w-max"
                   >
                     <Link

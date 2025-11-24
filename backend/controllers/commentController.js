@@ -8,7 +8,7 @@ export const getListCommentByChapter = async (req, res) => {
     const chapter = await Chapter.findOne({ slug: slugChapter });
     if (!chapter) return res.status(404).json({ message: "Chương không tồn tại" });
 
-    const comments = await Comment.find({ chapterId: chapter._id }).lean();
+    const comments = await Comment.find({ chapterId: chapter._id }).populate("userId", "displayName avtUrl").lean();
     return res.status(200).json({ message: "Lấy danh sách bình luận theo chương thành công", comments });
   } catch (error) {
     console.error("Lỗi khi lấy bình luận chương", error);
@@ -22,7 +22,7 @@ export const getListCommentByStory = async (req, res) => {
     const story = await Story.findOne({ slug: slugStory });
     if (!story) return res.status(404).json({ message: "Truyện không tồn tại" });
 
-    const comments = await Comment.find({ storyId: story._id }).lean();
+    const comments = await Comment.find({ storyId: story._id }).populate("userId", "displayName avtUrl").lean();
     return res.status(200).json({ message: "Lấy danh sách bình luận theo truyện thành công", comments });
   } catch (error) {
     console.error("Lỗi khi lấy bình luận truyện", error);

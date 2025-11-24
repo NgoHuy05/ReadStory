@@ -1,3 +1,4 @@
+import Chapter from "../models/chapterModel.js";
 import Story from "../models/storyModel.js";
 import User from "../models/userModel.js";
 
@@ -78,16 +79,26 @@ export const getListStoryRecommend = async (req, res) => {
 export const getDetailStory = async (req, res) => {
     try {
         const { slug } = req.params;
+
         const story = await Story.findOne({ slug });
         if (!story) {
-            return res.status(400).json({ message: "Không tìm thấy truyện" })
+            return res.status(400).json({ message: "Không tìm thấy truyện" });
         }
-        return res.status(200).json({ message: "Lấy chi tiết truyện thành công", story });
+
+        const chapters = await Chapter.find({ storyId: story._id })
+            .sort({ chapterNumber: 1 });
+
+        return res.status(200).json({
+            message: "Lấy chi tiết truyện thành công",
+            story,
+            chapters
+        });
     } catch (error) {
-        console.error("Lỗi khi lấy chi tiết truyện");
+        console.error("Lỗi khi lấy chi tiết truyện", error);
         return res.status(500).json({ message: "Lỗi hệ thống" });
     }
-}
+};
+
 
 export const createStory = async (req, res) => {
     try {

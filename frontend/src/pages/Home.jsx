@@ -32,7 +32,7 @@ const Home = () => {
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
             {hotStories?.stories.map((truyen) => (
               <div
-                onClick={() => navigate("/story")}
+                onClick={() => navigate(`/story/${truyen.slug}`)}
                 key={truyen._id}
                 className="bg-[var(--card-bg)] rounded-lg flex flex-col h-full hover:bg-[var(--card-bg)]/40  transition-all duration-300 cursor-pointer"
               >
@@ -74,7 +74,7 @@ const Home = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
           {newStories?.stories.map((truyen) => (
             <div
-              onClick={() => navigate("/story")}
+                onClick={() => navigate(`/story/${truyen.slug}`)}
               key={truyen._id}
               className="bg-[var(--card-bg)] rounded-lg flex flex-col h-full hover:bg-[var(--card-bg)]/40  transition-all duration-300 cursor-pointer"
             >
@@ -114,7 +114,7 @@ const Home = () => {
                 pathname: '/list-new-story',
                 search: "?page=1"
               })}
-              className="p-2 rounded-xl hover:hover:bg-[var(--card-bg)]/80 transition cursor-pointer"
+              className="p-2 rounded-xl hover:bg-[var(--card-bg)]/80 transition cursor-pointer"
             >
               Xem Thêm
             </div>
@@ -130,7 +130,7 @@ const Home = () => {
           <div className="flex flex-col gap-4">
             {recommendStories?.stories.map((truyen) => (
               <div
-                onClick={() => navigate("/story")}
+                onClick={() => navigate(`/story/${truyen.slug}`)}
                 key={truyen._id}
                 className="bg-[var(--card-bg)] rounded-lg flex flex-col h-full hover:bg-[var(--card-bg)]/40  transition-all duration-300 cursor-pointer"
               >
@@ -165,10 +165,10 @@ const Home = () => {
             <span className="flex-1 h-px bg-black"></span>
 
             <div className="flex gap-2">
-              <div className="p-2 rounded-full hover:bg-gray-200 transition cursor-pointer">
+              <div className="p-2 rounded-full hover:bg-[var(--card-bg)]/80 cursor-pointer">
                 <IoIosArrowBack />
               </div>
-              <div className="p-2 rounded-full hover:bg-gray-200 transition cursor-pointer">
+              <div className="p-2 rounded-full hover:bg-[var(--card-bg)]/80 transition cursor-pointer">
                 <IoIosArrowForward />
               </div>
             </div>

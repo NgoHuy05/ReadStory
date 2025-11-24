@@ -37,8 +37,7 @@ export const routers = createBrowserRouter([
       },
       {
         element: <Story />,
-        path: "story",
-        // path: "story/:slugStory",
+        path: "story/:slugStory",
       },
       {
         element: <NewStory />,
@@ -47,8 +46,7 @@ export const routers = createBrowserRouter([
       },
       {
         element: <Chapter />,
-        path: "story/chapter",
-        //path: "story/:slugStory/:chapterSlug",
+        path: "story/:slugStory/:slugChapter",
       },
 
       {
