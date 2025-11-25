@@ -12,6 +12,7 @@ import SignUp from "../pages/Auth/SignUp";
 import Profile from "../pages/Profile";
 import ProtectedRoute from "../components/ProtectedRoute";
 import NewStory from "../pages/Story/NewStory";
+import SortStory from "../pages/Story/SortStory";
 
 export const routers = createBrowserRouter([
   {
@@ -42,7 +43,10 @@ export const routers = createBrowserRouter([
       {
         element: <NewStory />,
         path: "list-new-story",
-        // path: "story/:slugStory",
+      },
+      {
+        element: <SortStory />,
+        path: "/:slugCategory",
       },
       {
         element: <Chapter />,

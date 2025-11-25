@@ -7,6 +7,7 @@ import {
   useGetListStoryNewQuery,
   useGetListStoryRecommendQuery,
 } from "../services/storyApi";
+import { formatTimeVN } from "../utils";
 
 const Home = () => {
 
@@ -58,7 +59,7 @@ const Home = () => {
                     <div className="flex items-center gap-1">
                       <FaBook /> {truyen.totalChapters}
                     </div>
-                    <div>5p trước</div>
+                    <div> {formatTimeVN(truyen.createdAt)} </div>
                   </div>
                 </div>
               </div>
@@ -100,7 +101,7 @@ const Home = () => {
                   <div className="flex items-center gap-1">
                     <FaBook /> {truyen.totalChapters}
                   </div>
-                  <div>5p trước</div>
+                    <div> {formatTimeVN(truyen.createdAt)} </div>
                 </div>
               </div>
             </div>

@@ -8,6 +8,7 @@ import {
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { useGetDetailStoryQuery } from "../services/storyApi";
+import { formatTimeVN } from "../utils";
 
 const Story = () => {
   const { slugStory } = useParams();
@@ -121,7 +122,7 @@ const Story = () => {
                     <div className="flex flex-col flex-1">
                       <div className="flex flex-col ">
                         <h3>{chapter.chapterNumber}</h3>
-                        <div> {chapter.createdAt} </div>
+                        <div> {formatTimeVN(chapter.createdAt)} </div>
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">

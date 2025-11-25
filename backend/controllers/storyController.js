@@ -1,4 +1,6 @@
+import Category from "../models/categoryModel.js";
 import Chapter from "../models/chapterModel.js";
+import StoryCategory from "../models/storyCategoryModel.js";
 import Story from "../models/storyModel.js";
 import User from "../models/userModel.js";
 
@@ -15,6 +17,7 @@ export const getListStory = async (req, res) => {
 
     }
 }
+
 
 export const getListStoryHot = async (req, res) => {
     try {
@@ -59,6 +62,64 @@ export const getListStoryNew = async (req, res) => {
 
     }
 }
+export const getListStorySort = async (req, res) => {
+  try {
+    const { slugCategory } = req.params;
+
+    const category = await Category.findOne({ slug: slugCategory });
+    if (!category) {
+      return res.status(404).json({ message: "Không tìm thấy thể loại" });
+    }
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = 12;
+    const skip = (page - 1) * limit;
+
+    const sort = req.query.sort;
+    const status = req.query.status;
+
+    const storyCategory = await StoryCategory.find({ categoryId: category._id });
+
+    const storyIds = storyCategory.map((item) => item.storyId);
+
+    let sortRule = { updatedAt: -1 };
+    if (sort === "follow") sortRule = { followsCount: -1 };
+    if (sort === "view") sortRule = { viewsCount: -1 };
+    if (sort === "new") sortRule = { createdAt: -1 };
+
+    const filter = {
+      _id: { $in: storyIds },
+      ...(status && { status })
+    };
+
+    const [stories, totals] = await Promise.all([
+      Story.find(filter)
+        .sort(sortRule)
+        .limit(limit)
+        .skip(skip)
+        .lean(),
+      Story.countDocuments(filter)
+    ]);
+
+    return res.status(200).json({
+      message: "Lấy danh sách truyện thành công",
+      stories,
+      category,
+      pagination: {
+        page,
+        limit,
+        totals,
+        totalsPage: Math.max(1, Math.ceil(totals / limit)),
+      },
+    });
+
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách truyện", error);
+    return res.status(500).json({ message: "Lỗi hệ thống" });
+  }
+};
+
+
 export const getListStoryRecommend = async (req, res) => {
     try {
         const stories = await Story.find()

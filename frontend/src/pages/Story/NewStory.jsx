@@ -3,22 +3,13 @@ import { FaBook } from "react-icons/fa";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useGetListStoryNewQuery } from "../../services/storyApi";
-import { useState } from "react";
-import { FaLongArrowAltRight } from "react-icons/fa";
 
 const NewStory = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
   const { data: newStories, isLoading } = useGetListStoryNewQuery({ page });
   const navigate = useNavigate();
-  const [inputPage, setInputPage] = useState(null);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (inputPage && !isNaN(inputPage)) {
-      setSearchParams({ page: inputPage });
-    }
-    setInputPage("");
-  };
+
 
   if (isLoading) return <div className="text-3xl font-bold">Loading...</div>;
 
@@ -89,26 +80,13 @@ const NewStory = () => {
             <IoIosArrowForward />
           </button>
 
-          <form className="flex gap-2 ml-5" onSubmit={handleSubmit}>
-            <input
-              className="rounded outline-none focus:ring-2 focus:ring-red-500 px-4 py-2 w-[60px] bg-[var(--card-bg)]"
-              value={inputPage}
-              onChange={(e) => setInputPage(e.target.value)}
-              placeholder="Go"
-            />
-            <button
-              type="submit"
-              className="rounded px-4 py-2 bg-[var(--card-bg)] hover:bg-[var(--card-hover-bg)] cursor-pointer transition duration-300"
-            >
-              <FaLongArrowAltRight />
-            </button>
-          </form>
+
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
           {newStories?.stories.map((truyen) => (
             <div
-              onClick={() => navigate("/story")}
+                onClick={() => navigate(`/story/${truyen.slug}`)}
               key={truyen._id}
               className="bg-[var(--card-bg)] rounded-lg flex flex-col h-full hover:bg-[var(--card-bg)]/40  transition-all duration-300 cursor-pointer"
             >

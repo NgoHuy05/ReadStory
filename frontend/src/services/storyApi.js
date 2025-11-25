@@ -8,6 +8,7 @@ export const storyApi = createApi({
     endpoints: (builder) => ({
         getListStory: builder.query({ query: () => '/story/list' }),
         getListStoryNew: builder.query({ query: ({ page = 1 }) => `/story/list/new?page=${page}` }),
+        getListStorySort: builder.query({ query: ({slugCategory, page = 1, sort = "new" , status = "ongoing" }) => `/story/list/sort/${slugCategory}?page=${page}&sort=${sort}&status=${status}` }),
         getListStoryHot: builder.query({ query: () => '/story/list/hot' }),
         getListStoryRecommend: builder.query({ query: () => '/story/list/recommend' }),
         getDetailStory: builder.query({
@@ -36,6 +37,7 @@ export const {
     useGetListStoryNewQuery,
     useGetListStoryRecommendQuery,
     useGetDetailStoryQuery,
+    useGetListStorySortQuery,
     useCreateStoryMutation,
     useDeleteStoryMutation
 } = storyApi
