@@ -208,3 +208,23 @@ export const deleteStory = async (req, res) => {
     }
 }
 
+export const searchStory = async (req, res) => {
+  try {
+    const keyword = req.query.keyword?.trim() || "";
+
+    if (!keyword) {
+      return res.json({ data: [] }); // frontend luôn nhận `data`
+    }
+
+    const stories = await Story.find({
+      title: { $regex: keyword, $options: "i" }
+    })
+      .limit(10)
+      .lean();
+
+    return res.json({ data: stories });
+  } catch (error) {
+    console.error("Lỗi khi tìm kiếm truyện", error);
+    return res.status(500).json({ message: "Lỗi hệ thống" });
+  }
+};

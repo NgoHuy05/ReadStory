@@ -8,11 +8,15 @@ export const storyApi = createApi({
     endpoints: (builder) => ({
         getListStory: builder.query({ query: () => '/story/list' }),
         getListStoryNew: builder.query({ query: ({ page = 1 }) => `/story/list/new?page=${page}` }),
-        getListStorySort: builder.query({ query: ({slugCategory, page = 1, sort = "new" , status = "ongoing" }) => `/story/list/sort/${slugCategory}?page=${page}&sort=${sort}&status=${status}` }),
+        getListStorySort: builder.query({ query: ({ slugCategory, page = 1, sort = "new", status = "ongoing" }) => `/story/list/sort/${slugCategory}?page=${page}&sort=${sort}&status=${status}` }),
         getListStoryHot: builder.query({ query: () => '/story/list/hot' }),
         getListStoryRecommend: builder.query({ query: () => '/story/list/recommend' }),
+searchStory: builder.query({
+  query: ({ keyword }) => `/story/search?keyword=${encodeURIComponent(keyword) || ""}`
+}),
+
         getDetailStory: builder.query({
-            query: (slug) => `/story/${slug}`,
+            query: (slug) => `/story/detail/${slug}`,
         }),
         createStory: builder.mutation({
             query: (data) => ({
@@ -25,7 +29,7 @@ export const storyApi = createApi({
             query: (id) => ({
                 url: '/story/delete',
                 method: 'POST',
-                body: {id}
+                body: { id }
             })
         }),
     })
@@ -39,5 +43,6 @@ export const {
     useGetDetailStoryQuery,
     useGetListStorySortQuery,
     useCreateStoryMutation,
-    useDeleteStoryMutation
+    useDeleteStoryMutation,
+    useSearchStoryQuery,
 } = storyApi

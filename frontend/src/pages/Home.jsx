@@ -12,13 +12,11 @@ import { formatTimeVN } from "../utils";
 const Home = () => {
 
   const { data: hotStories, isLoading: loadingHot } = useGetListStoryHotQuery();
-  const { data: newStories, isLoading: loadingNew } =
-    useGetListStoryNewQuery({page: 1});
+const { data: newStories = { stories: [], pagination: {} }, isLoading: loadingNew } = useGetListStoryNewQuery({page: 1});
+
   const { data: recommendStories, isLoading: loadingRcm } =
     useGetListStoryRecommendQuery();
   const navigate = useNavigate();
-
-  console.log(newStories);
 
   if (loadingHot || loadingNew || loadingRcm)
     return <div className="text-3xl font-bold">Loading...</div>;

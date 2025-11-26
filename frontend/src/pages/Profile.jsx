@@ -2,20 +2,17 @@ import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 import {
-  useGetProfileQuery,
   useUpdateProfileMutation,
 } from "../services/userApi";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 
 const Profile = () => {
-  const accessToken = useSelector((state) => state.auth.accessToken);
   const [display, setDisplay] = useState("Information");
   const [isEditing, setIsEditing] = useState(false);
   const [updateProfile] = useUpdateProfileMutation();
-  const { data, isLoading } = useGetProfileQuery(undefined, {
-    skip: !accessToken,
-  });
+
+  const user = useSelector((state) => state.user.user);
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -31,18 +28,18 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    if (data?.user) {
+    if (user) {
       const init = {
-        username: data.user.username,
-        email: data.user.email,
-        fullName: data.user.fullName,
-        displayName: data.user.displayName,
+        username: user.username,
+        email: user.email,
+        fullName: user.fullName,
+        displayName: user.displayName,
       };
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setInitialForm(init);
       setForm(init);
     }
-  }, [data]);
+  }, [user]);
 
   const handleDisplay = (type) => setDisplay(type);
 
@@ -82,7 +79,6 @@ const Profile = () => {
     }
   };
 
-  if (isLoading) return <div className="text-white p-4">Loading...</div>;
 
   return (
     <main>

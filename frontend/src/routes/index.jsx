@@ -46,7 +46,7 @@ export const routers = createBrowserRouter([
       },
       {
         element: <SortStory />,
-        path: "/:slugCategory",
+        path: "category/:slugCategory",
       },
       {
         element: <Chapter />,

@@ -26,5 +26,3 @@ export const formatTimeVN = (timestamp) => {
   return `${d}/${m}/${y}`;
 }
 
-// Test
-console.log(formatTimeVN("2025-11-22T10:20:27.296+00:00"));
