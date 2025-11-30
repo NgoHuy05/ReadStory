@@ -9,8 +9,8 @@ import { saveUser } from "../redux/slice/userSlice";
 import MenuItem from "../components/MenuItem";
 import UserMenu from "../components/UserMenu";
 import SearchBox from "../components/SearchBox";
-import MobileDropdown from "../components/MobileDropdown";
 import { IoMdMenu } from "react-icons/io";
+import MobileDropdown from "../components/MobileDropdown";
 
 const Header = () => {
   const dispatch = useDispatch();

@@ -160,37 +160,41 @@ export const getDetailStory = async (req, res) => {
     }
 };
 
-
 export const createStory = async (req, res) => {
-    try {
-        if (!req.user?._id) {
-            return res.status(401).json({ message: "Chưa đăng nhập" });
-        }
-
-        const { title, description, status } = req.body;
-
-        const exist = await Story.findOne({ title });
-        if (exist) {
-            return res.status(400).json({ message: "Tên truyện đã tồn tại" });
-        }
-
-        const user = await User.findById(req.user._id).select("displayName");
-
-        const story = await Story.create({
-            title,
-            description,
-            author: user.displayName,
-            status,
-            viewsCount: 0,
-            followsCount: 0,
-            totalChapters: 0,
-        });
-
-        return res.status(200).json({ message: "Tạo truyện thành công", story });
-    } catch (error) {
-        console.error("Lỗi khi tạo truyện", error);
-        return res.status(500).json({ message: "Lỗi hệ thống" });
+  try {
+    if (!req.user?._id) {
+      return res.status(401).json({ message: "Chưa đăng nhập" });
     }
+
+    const { title, description, status } = req.body;
+
+    const exist = await Story.findOne({ title });
+    if (exist) {
+      return res.status(400).json({ message: "Tên truyện đã tồn tại" });
+    }
+
+    const user = await User.findById(req.user._id).select("displayName");
+
+console.log("FILE UPLOAD:", req.file);
+
+    const bannerImage = req.file?.path || null; 
+
+    const story = await Story.create({
+      title,
+      description,
+      author: user.displayName,
+      status,
+      bannerImage: bannerImage, 
+      viewsCount: 0,
+      followsCount: 0,
+      totalChapters: 0,
+    });
+
+    return res.status(200).json({ message: "Tạo truyện thành công", story });
+  } catch (error) {
+    console.error("Lỗi khi tạo truyện", error);
+    return res.status(500).json({ message: "Lỗi hệ thống" });
+  }
 };
 
 

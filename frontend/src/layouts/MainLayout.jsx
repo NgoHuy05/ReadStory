@@ -1,11 +1,12 @@
 import { Outlet } from "react-router-dom";
-import Header from "./Header";
-import Footer from "../components/Footer";
+
 import ScrollToTop from "../components/ScrollToTop";
 import { useDispatch } from "react-redux";
 import { useRefreshTokenMutation } from "../services/authApi";
 import { useEffect } from "react";
 import { logOut, setCredentials, finishLoading } from "../redux/slice/authSlice";
+import Header from "./Header";
+import Footer from "./Footer";
 
 const MainLayout = () => {
   const dispatch = useDispatch();

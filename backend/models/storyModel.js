@@ -10,7 +10,7 @@ const storySchema = new mongoose.Schema({
     followsCount: { type: Number, default: 0 },
     totalChapters: { type: Number, default: 0 },
     status: { type: String, enum: ['ongoing', 'completed'], default: 'ongoing' },
-    
+    bannerImage: { type: String },
 }, { timestamps: true });
 
 slugMiddleware(storySchema, "title");
