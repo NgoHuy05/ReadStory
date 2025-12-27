@@ -1,6 +1,5 @@
 import rateLimit from 'express-rate-limit';
 
-// Giới hạn tối đa 10 request / 15 phút / 1 IP
 export const rateLimitMiddleware = rateLimit({
   windowMs: 15 * 60 * 1000, 
   max: 10,
