@@ -7,7 +7,7 @@ import {
 export const getListCategory = async (req, res, next) => {
   try {
     const category = await getListCategoryService();
-    res.status(200).json({ category });
+    res.status(200).json({ message: "Lấy danh sách category thành công", category });
   } catch (err) {
     next(err);
   }

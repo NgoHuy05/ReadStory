@@ -43,7 +43,8 @@ export const createChapter = async (req, res, next) => {
 
 export const deleteChapter = async (req, res, next) => {
   try {
-    await deleteChapterService(req.params.id);
+    const {chapterId} = req.params;
+    await deleteChapterService(chapterId);
     return res.status(200).json({ message: "Xóa chương thành công" });
   } catch (err) {
     next(err);

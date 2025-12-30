@@ -12,12 +12,12 @@ export const createBookmark = async (req, res, next) => {
 };
 
 export const deleteBookmark = async (req, res, next) => {
-    try {
-        const userId = req.user._id;
-        const { storyId } = req.body;
-        await deleteBookmarkService({ userId, storyId });
-        res.status(200).json({ message: "Xóa bookmark thành công" });
-    } catch (err) {
-        next(err);
-    }
+  try {
+    const userId = req.user._id;
+    const { storyId } = req.params;
+    await deleteBookmarkService({ userId, storyId });
+    res.status(200).json({ message: "Xóa bookmark thành công" });
+  } catch (err) {
+    next(err);
+  }
 };

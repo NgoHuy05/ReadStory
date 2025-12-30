@@ -1,14 +1,7 @@
 import User from "../models/userModel.js";
 import { NotFoundError, BadRequestError, UnauthorizedError } from "../utils/errors/index.js";
 
-export const getProfileService = async (userId) => {
-  if (!userId) throw new UnauthorizedError("Vui lòng đăng nhập");
 
-  const user = await User.findById(userId).select("-password");
-  if (!user) throw new NotFoundError("Người dùng không tồn tại");
-
-  return user;
-};
 
 export const getListUserService = async () => {
   const users = await User.find().select("-password");
@@ -19,11 +12,11 @@ export const getListUserService = async () => {
 export const updateProfileService = async (userId, data) => {
   if (!userId) throw new UnauthorizedError("Vui lòng đăng nhập");
 
-  const { displayName, fullName } = data;
+  const { displayName, fullname } = data;
 
   const user = await User.findByIdAndUpdate(
     userId,
-    { displayName, fullName },
+    { displayName, fullname },
     { new: true }
   ).select("-password");
 

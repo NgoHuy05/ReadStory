@@ -21,7 +21,7 @@ export const SignUpService = async (data) => {
     });
 
     if (existingUser) {
-        throw new ConflictError("Tài khoẳn hoặc email đã tồn tại");
+        throw new ConflictError("Tài khoản hoặc email đã tồn tại");
     }
 
     const hassedPassword = await bcrypt.hash(password, 10);
@@ -94,4 +94,13 @@ export const RefreshTokenService = async (refreshToken) => {
     accessToken: newAccessToken,
     refreshToken: newRefreshToken
   };
+};
+
+export const getProfileService = async (userId) => {
+  if (!userId) throw new UnauthorizedError("Vui lòng đăng nhập");
+
+  const user = await User.findById(userId).select("-password");
+  if (!user) throw new NotFoundError("Người dùng không tồn tại");
+
+  return user;
 };

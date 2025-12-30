@@ -3,7 +3,8 @@ import { createBookmark, deleteBookmark } from "../controllers/bookmarkControlle
 const router = express.Router();
 
 router.post('/create', createBookmark);
-router.post('/delete', deleteBookmark);
+
+router.delete("/bookmark/:storyId", deleteBookmark);
 
 
 export default router;

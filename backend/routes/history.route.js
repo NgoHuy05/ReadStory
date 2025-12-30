@@ -3,7 +3,7 @@ import { createHistory, deleteHistory } from "../controllers/historyController.j
 const router = express.Router();
 
 router.post('/create', createHistory);
-router.post('/delete', deleteHistory);
+router.delete('/delete/:storyId/:chapterId', deleteHistory);
 
 
 export default router;

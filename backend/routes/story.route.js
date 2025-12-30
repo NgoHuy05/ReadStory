@@ -12,7 +12,9 @@ router.get('/list/hot', getListStoryHot);
 router.get('/list/recommend', getListStoryRecommend);
 router.get('/list/sort/:slugCategory', getListStorySort);
 router.get('/detail/:slug', getDetailStory);
+
 router.post('/create', authMiddleware, upload.single('bannerImage'), createStory);
-router.post('/delete', authMiddleware, deleteStory);
+
+router.delete('/delete/:storyId', authMiddleware, deleteStory);
 
 export default router;

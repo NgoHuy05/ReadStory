@@ -79,9 +79,9 @@ export const createStory = async (req, res, next) => {
 
 export const deleteStory = async (req, res, next) => {
   try {
-    const { id } = req.body;
-    await deleteStoryService(id);
-    res.status(200).json({ message: "Xóa truyện thành công" });
+    const { storyId } = req.params;
+    await deleteStoryService(storyId);
+    res.status(200).json({ message: "Xóa truyện thành công", storyId });
   } catch (err) {
     next(err);
   }

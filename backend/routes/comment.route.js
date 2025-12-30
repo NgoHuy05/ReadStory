@@ -7,6 +7,6 @@ router.get('/list/chapter/:slugChapter', getListCommentByChapter);
 router.get('/list/story/:slugStory', getListCommentByStory);
 
 router.post('/create', authMiddleware, createComment);
-router.post('/delete', authMiddleware, deleteComment);
+router.delete('/delete/:commentId', authMiddleware, deleteComment);
 
 export default router;

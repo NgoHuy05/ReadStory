@@ -34,8 +34,8 @@ export const createComment = async (req, res, next) => {
 
 export const deleteComment = async (req, res, next) => {
   try {
-    const comment = await deleteCommentService(req.user._id, req.body.commentId);
-    return res.status(200).json({ message: "Xóa comment thành công", comment });
+    await deleteCommentService(req.user._id, req.params.commentId);
+    return res.status(200).json({ message: "Xóa comment thành công" });
   } catch (err) {
     next(err);
   }

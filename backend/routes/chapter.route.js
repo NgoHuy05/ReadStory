@@ -3,9 +3,11 @@ import { createChapter, deleteChapter, getDetailChapter, getListChapterByStory }
 const router = express.Router();
 
 router.get('/list/:slugStory', getListChapterByStory);
-router.get('/:slugChapter', getDetailChapter);
+router.get('/detail/:slugChapter', getDetailChapter);
+
 router.post('/create', createChapter);
-router.post('/delete', deleteChapter);
+
+router.delete('/delete/:chapterId', deleteChapter);
 
 
 export default router;
