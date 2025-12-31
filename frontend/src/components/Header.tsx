@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
-import { signOut } from "../store/authSlice";
 import { FaSpinner } from "react-icons/fa";
+import { logout } from "../store/authSlice";
 
 const categorys = [
   { id: 1, name: "Manhua" },
@@ -146,7 +146,7 @@ const HeaderRight = () => {
   const { user, loading } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleLogout = () => dispatch(signOut());
+  const handleLogout = () => dispatch(logout());
 
   if (loading) {
     return (

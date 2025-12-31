@@ -5,7 +5,6 @@ import { FaEye, FaHeart } from "react-icons/fa";
 import { FaBook } from "react-icons/fa";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
-  // ===== MOCK DATA =====
   const hotStories = {
     stories: [
       {

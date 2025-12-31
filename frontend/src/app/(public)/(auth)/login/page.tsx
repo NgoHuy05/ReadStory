@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { AppDispatch, RootState } from "@/src/store";
-import { signIn } from "@/src/store/authSlice";
+import { login } from "@/src/store/authSlice";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ username: "", password: "" });
@@ -22,7 +22,7 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(signIn({ username: form.username, password: form.password }));
+    dispatch(login({ username: form.username, password: form.password }));
   };
 
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { AppDispatch, RootState } from "@/src/store";
-import {  signUp } from "@/src/store/authSlice";
+import { register } from "@/src/store/authSlice";
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -25,7 +25,7 @@ export default function RegisterPage() {
     e.preventDefault();
 
     dispatch(
-      signUp({
+      register({
         username: form.username,
         fullname: form.fullname,
         email: form.email,
