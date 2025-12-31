@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import getErrorMsg from "../lib/getErrorMsg";
 import api from "../lib/axios";
 
-interface Chapter {
+export interface Chapter {
   _id: string;
   storyId: string;
   title: string;
@@ -10,6 +10,9 @@ interface Chapter {
   chapterNumber: number;
   viewsNumber: number;
   commentsNumber: number;
+  createdAt: string;
+  updatedAt: string;
+  slug: string;
 }
 
 interface ChapterState {
