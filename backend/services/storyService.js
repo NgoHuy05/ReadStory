@@ -56,11 +56,11 @@ export const getListStoryRecommendService = async () => {
 };
 
 export const getDetailStoryService = async (slug) => {
-  const story = await Story.findOne({ slug });
+  const story = await Story.findOne({ slug }).lean();
   if (!story) throw new NotFoundError("Không tìm thấy truyện");
 
-  const chapters = await Chapter.find({ storyId: story._id }).sort({ chapterNumber: 1 });
-  return { story, chapters };
+  const chapters = await Chapter.find({ storyId: story._id }).sort({ chapterNumber: 1 }).lean();
+return { story: { ...story, chapters } };
 };
 
 export const createStoryService = async ({ userId, title, description, status, bannerImage }) => {

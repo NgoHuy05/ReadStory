@@ -61,12 +61,17 @@ export const getListStoryRecommend = async (req, res, next) => {
 export const getDetailStory = async (req, res, next) => {
   try {
     const { slugStory } = req.params;
-    const story = await getDetailStoryService(slugStory);
-    res.status(200).json({ message: "Lấy chi tiết truyện thành công", ...story });
+    const { story } = await getDetailStoryService(slugStory);
+
+    res.status(200).json({
+      message: "Lấy chi tiết truyện thành công",
+      story
+    });
   } catch (err) {
     next(err);
   }
 };
+
 
 export const createStory = async (req, res, next) => {
   try {
