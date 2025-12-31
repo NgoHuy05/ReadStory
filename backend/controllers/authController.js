@@ -6,7 +6,8 @@ const REFRESH_TOKEN_TTL = 14 * 24 * 60 * 60 * 1000;
 
 export const SignUp = async (req, res, next) => {
     try {
-        await SignUpService(req.body);
+        const {username, fullname, email, password, repassword} = req.body;
+        await SignUpService({username, fullname, email, password, repassword});
         res.status(200).json({ message: "Đăng kí thành công" });
     } catch (err) {
         next(err);
@@ -15,8 +16,8 @@ export const SignUp = async (req, res, next) => {
 
 export const SignIn = async (req, res, next) => {
     try {
-        const { user, accessToken, refreshToken } = await SignInService(req.body);
-
+        const {username, password} = req.body;
+        const { user, accessToken, refreshToken } = await SignInService({username, password});
         res.cookie('accessToken', accessToken, { httpOnly: true, sameSite: 'lax', maxAge: ACCESS_TOKEN_MAX_AGE });
         res.cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: 'lax', maxAge: REFRESH_TOKEN_TTL });
         
@@ -62,7 +63,8 @@ export const RefreshToken = async (req, res, next) => {
 
 export const getProfile = async (req, res, next) => {
   try {
-    const user = await getProfileService(req.user?._id);
+    const userId = req.user?._id;
+    const user = await getProfileService(userId);
     res.status(200).json({ message: "Lấy thông tin người dùng thành công", user });
   } catch (err) {
     next(err);

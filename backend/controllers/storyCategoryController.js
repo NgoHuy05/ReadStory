@@ -15,7 +15,8 @@ export const getListStoryCategory = async (req, res, next) => {
 
 export const createStoryCategory = async (req, res, next) => {
   try {
-    const categoryStory = await createStoryCategoryService(req.body);
+    const { storyId, categoryId } = req.body;
+    const categoryStory = await createStoryCategoryService({ storyId, categoryId });
     res.status(201).json({ message: "Tạo storyCategory thành công", categoryStory });
   } catch (err) {
     next(err);
@@ -24,10 +25,11 @@ export const createStoryCategory = async (req, res, next) => {
 
 export const deleteStoryCategory = async (req, res, next) => {
   try {
+    const { storyId, categoryId } = req.params;
     const storyCategory = await deleteStoryCategoryService(
       {
-        storyId: req.params.storyId,
-        categoryId: req.params.categoryId
+        storyId,
+        categoryId
       });
     res.status(200).json({
       message: "Xóa storyCategory thành công",

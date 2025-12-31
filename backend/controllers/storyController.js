@@ -60,9 +60,9 @@ export const getListStoryRecommend = async (req, res, next) => {
 
 export const getDetailStory = async (req, res, next) => {
   try {
-    const { slug } = req.params;
-    const result = await getDetailStoryService(slug);
-    res.status(200).json({ message: "Lấy chi tiết truyện thành công", ...result });
+    const { slugStory } = req.params;
+    const story = await getDetailStoryService(slugStory);
+    res.status(200).json({ message: "Lấy chi tiết truyện thành công", ...story });
   } catch (err) {
     next(err);
   }
@@ -70,7 +70,10 @@ export const getDetailStory = async (req, res, next) => {
 
 export const createStory = async (req, res, next) => {
   try {
-    const story = await createStoryService({ userId: req.user._id, ...req.body, bannerImage: req.file?.path });
+    const userId = req.user._id;
+    const { title, description, status } = req.body;
+    const bannerImage = req.file ? req.file.path : null;
+    const story = await createStoryService({ userId, title, description, status, bannerImage });
     res.status(201).json({ message: "Tạo truyện thành công", story });
   } catch (err) {
     next(err);

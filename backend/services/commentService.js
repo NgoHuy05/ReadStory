@@ -25,8 +25,7 @@ export const getListCommentByStoryService = async (slugStory) => {
   return comments;
 };
 
-export const createCommentService = async (data) => {
-  const { userId, storyId, chapterId = null, content } = data;
+export const createCommentService = async ({ userId, storyId, chapterId, content }) => {
   const comment = await Comment.create({ userId, storyId, chapterId, content });
   return comment;
 };

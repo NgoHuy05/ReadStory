@@ -19,8 +19,7 @@ export const getDetailChapterService = async (slugChapter) => {
   return chapter;
 };
 
-export const createChapterService = async (data) => {
-  const { storyId, title, content, chapterNumber } = data;
+export const createChapterService = async ({storyId, title, content, chapterNumber}) => {
   if (!storyId || !title || !content || !chapterNumber) {
     throw new BadRequestError("Chưa điền đầy đủ thông tin chương");
   }

@@ -8,8 +8,7 @@ import Session from "../models/sessionModel.js";
 const ACCESS_TOKEN_TTL = "15m"; 
 const REFRESH_TOKEN_TTL = 14 * 24 * 60 * 60 * 1000; 
 
-export const SignUpService = async (data) => {
-    const {username, fullname, email, password, repassword} = data;
+export const SignUpService = async ({username, fullname, email, password, repassword}) => {
     if (!username || !fullname || !email || !password || !repassword) {
         throw new BadRequestError("Chưa điền đầy đủ các trường bắt buộc");
     }
@@ -34,8 +33,7 @@ export const SignUpService = async (data) => {
     });
 }
 
-export const SignInService = async (data) => {
-    const {username, password} = data;
+export const SignInService = async ({username, password}) => {
     if (!username || !password) {
         throw new BadRequestError("Chưa nhập đầy đủ trường bắt buộc");
     }

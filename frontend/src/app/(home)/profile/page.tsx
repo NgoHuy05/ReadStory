@@ -7,7 +7,7 @@ import { IoIosSettings } from "react-icons/io";
 import { useSelector } from "react-redux";
 
 const Profile = () => {
-  const { user, initialized } = useSelector((state: RootState) => state.auth);
+  const { user, loading } = useSelector((state: RootState) => state.auth);
 
   const [display, setDisplay] = useState<"Information" | "Setting">(
     "Information"
@@ -79,14 +79,14 @@ const Profile = () => {
 
         {/* Content */}
         <section className="bg-[var(--card-bg)] h-screen rounded-2xl px-4 py-4 overflow-y-auto">
-          {!initialized && (
+          {loading && (
             <div className="px-4 py-2 rounded-lg flex gap-2 items-center">
               <FaSpinner className="animate-spin text-white" />
               <div>Loading...</div>
             </div>
           )}
 
-          {initialized && display === "Information" && (
+          {!loading && display === "Information" && (
             <form
               onSubmit={handleSubmit}
               className="grid grid-cols-1 md:grid-cols-2 gap-4"

@@ -11,7 +11,7 @@ router.get('/list/new', getListStoryNew);
 router.get('/list/hot', getListStoryHot);
 router.get('/list/recommend', getListStoryRecommend);
 router.get('/list/sort/:slugCategory', getListStorySort);
-router.get('/detail/:slug', getDetailStory);
+router.get('/detail/:slugStory', getDetailStory);
 
 router.post('/create', authMiddleware, upload.single('bannerImage'), createStory);
 

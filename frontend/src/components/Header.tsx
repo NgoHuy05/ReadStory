@@ -143,12 +143,12 @@ const Header = () => {
 export default Header;
 
 const HeaderRight = () => {
-  const { user, initialized } = useSelector((state: RootState) => state.auth);
+  const { user, loading } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleLogout = () => dispatch(signOut());
 
-  if (!initialized) {
+  if (loading) {
     return (
       <div className="px-4 py-2  rounded-lg flex gap-2 items-center">
         <FaSpinner className="animate-spin text-white" />

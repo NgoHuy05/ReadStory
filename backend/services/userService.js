@@ -9,10 +9,8 @@ export const getListUserService = async () => {
   return users;
 };
 
-export const updateProfileService = async (userId, data) => {
+export const updateProfileService = async (userId, displayName, fullname) => {
   if (!userId) throw new UnauthorizedError("Vui lòng đăng nhập");
-
-  const { displayName, fullname } = data;
 
   const user = await User.findByIdAndUpdate(
     userId,

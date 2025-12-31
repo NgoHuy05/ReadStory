@@ -7,7 +7,8 @@ import {
 
 export const getListChapterByStory = async (req, res, next) => {
   try {
-    const chapters = await getListChapterByStoryService(req.params.slugStory);
+    const slugStory = req.params.slugStory;
+    const chapters = await getListChapterByStoryService(slugStory);
     return res.status(200).json({
       message: "Lấy danh sách chương thành công",
       chapters,
@@ -19,7 +20,8 @@ export const getListChapterByStory = async (req, res, next) => {
 
 export const getDetailChapter = async (req, res, next) => {
   try {
-    const chapter = await getDetailChapterService(req.params.slugChapter);
+    const slugChapter = req.params.slugChapter;
+    const chapter = await getDetailChapterService(slugChapter);
     return res.status(200).json({
       message: "Lấy chi tiết chương thành công",
       chapter,
@@ -31,7 +33,8 @@ export const getDetailChapter = async (req, res, next) => {
 
 export const createChapter = async (req, res, next) => {
   try {
-    const chapter = await createChapterService(req.body);
+    const {storyId, title, content, chapterNumber} = req.body;
+    const chapter = await createChapterService({storyId, title, content, chapterNumber});
     return res.status(201).json({
       message: "Tạo chương thành công",
       chapter,

@@ -17,7 +17,9 @@ export const getListUser = async (req, res, next) => {
 
 export const updateProfile = async (req, res, next) => {
   try {
-    const user = await updateProfileService(req.user?._id, req.body);
+    const userId = req.user._id;
+    const {displayName, fullname } = req.body;
+    const user = await updateProfileService(userId, displayName, fullname);
     res.status(200).json({ message: "Cập nhật thông tin người dùng thành công", user });
   } catch (err) {
     next(err);
