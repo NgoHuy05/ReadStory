@@ -1,6 +1,6 @@
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
-import AuthGuard from "@/src/components/AuthGuard";
+import AuthGuard from "@/src/components/auth/AuthGuard";
 export default function RootLayout({
   children,
 }: Readonly<{

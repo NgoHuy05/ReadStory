@@ -57,10 +57,10 @@ const Profile = () => {
 
   return (
     <main>
-      <div className="grid grid-cols-1 lg:grid-cols-[20%_75%] gap-5 ml-5">
-        {/* Sidebar */}
+      <div className="grid grid-cols-1 lg:grid-cols-[20%_75%] gap-5 mx-auto max-w-7xl px-4 py-8">
         <aside className="flex lg:flex-col gap-2 bg-[var(--card-bg)] lg:h-screen rounded-2xl px-4 py-2">
           <button
+            type="button"
             onClick={() => setDisplay("Information")}
             className="flex gap-2 items-center px-4 py-2 hover:bg-[var(--card-hover-bg)] rounded-2xl"
           >
@@ -69,6 +69,7 @@ const Profile = () => {
           </button>
 
           <button
+            type="button"
             onClick={() => setDisplay("Setting")}
             className="flex gap-2 items-center px-4 py-2 hover:bg-[var(--card-hover-bg)] rounded-2xl"
           >
@@ -77,8 +78,7 @@ const Profile = () => {
           </button>
         </aside>
 
-        {/* Content */}
-        <section className="bg-[var(--card-bg)] h-screen rounded-2xl px-4 py-4 overflow-y-auto">
+        <section className="bg-[var(--card-bg)] rounded-2xl px-4 py-4 overflow-y-auto">
           {loading && (
             <div className="px-4 py-2 rounded-lg flex gap-2 items-center">
               <FaSpinner className="animate-spin text-white" />

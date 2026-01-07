@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { ReactNode } from 'react';
 import {  store } from '../store';
 import { injectStore } from '../lib/axios';
-import AuthInit from '../components/AuthInit';
+import AuthInit from '../components/auth/AuthInit';
 
 injectStore(store);
 

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import { RootState } from "@/src/store";
 
 export default function AuthGuard({
   children,
@@ -21,13 +21,6 @@ export default function AuthGuard({
     }
   }, [initialized, user, router]);
 
-  if (!initialized) {
-    return (
-      <div className="min-h-screen bg-[var(--main-bg)] text-white dark:bg-darkMode-800 py-4">
-        Loading...
-      </div>
-    );
-  }
 
   if (!user) return null;
 

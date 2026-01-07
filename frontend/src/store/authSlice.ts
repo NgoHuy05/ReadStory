@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../lib/axios";
 import getErrorMsg from "../lib/getErrorMsg";
+import toast from "react-hot-toast";
 
 export interface User {
   _id: string;
@@ -33,12 +34,14 @@ export const login = createAsyncThunk<
 >("auth/Login", async (data, thunkAPI) => {
   try {
     const res = await api.post("/auth/login", data);
+    toast.success("Đăng nhập thành công");
     return {
       message: res.data.message,
       user: res.data.user,
       accessToken: res.data.accessToken,
     };
   } catch (err) {
+    toast.error("Đăng nhập thất bại");
     return thunkAPI.rejectWithValue(getErrorMsg(err, "Đăng nhập thất bại"));
   }
 });
@@ -56,8 +59,10 @@ export const register = createAsyncThunk<
 >("auth/Register", async (data, thunkAPI) => {
   try {
     const res = await api.post("/auth/register", data);
+    toast.success("Đăng ký thành công");
     return { message: res.data.message };
   } catch (err) {
+    toast.error("Đăng ký thất bại");
     return thunkAPI.rejectWithValue(getErrorMsg(err, "Đăng ký thất bại"));
   }
 });
@@ -67,7 +72,9 @@ export const logout = createAsyncThunk<void, void, { rejectValue: string }>(
   async (_, thunkAPI) => {
     try {
       await api.post("/auth/logout");
+      toast.success("Đăng xuất thành công");
     } catch (err) {
+      toast.error("Đăng xuất thất bại");
       return thunkAPI.rejectWithValue(getErrorMsg(err, "Đăng xuất thất bại"));
     }
   }

@@ -2,8 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../lib/axios";
 import getErrorMsg from "../lib/getErrorMsg";
 import { Chapter } from "./chapterSlice";
+import toast from "react-hot-toast";
 
-interface Story {
+export interface Story {
   _id: string;
   title: string;
   description: string;
@@ -25,6 +26,7 @@ interface StoryState {
   listStoryHot: Story[];
   listStoryRecommend: Story[];
   loading: boolean;
+  loadingDetail: boolean;
   error: string | null;
 }
 const initialState: StoryState = {
@@ -34,6 +36,7 @@ const initialState: StoryState = {
   listStoryHot: [],
   listStoryRecommend: [],
   loading: false,
+  loadingDetail: false,
   error: null,
 };
 export const getListStory = createAsyncThunk<
@@ -45,9 +48,7 @@ export const getListStory = createAsyncThunk<
     const res = await api.get(`/story/list`);
     return { message: res.data.message, stories: res.data.stories };
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Lấy danh sách truyện thất bại")
-    );
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Lấy danh sách truyện thất bại"));
   }
 });
 
@@ -60,9 +61,7 @@ export const getListStoryHot = createAsyncThunk<
     const res = await api.get(`/story/list/hot`);
     return { message: res.data.message, stories: res.data.stories };
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Lấy danh sách truyện hot thất bại")
-    );
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Lấy danh sách truyện hot thất bại"));
   }
 });
 
@@ -75,9 +74,7 @@ export const getListStoryNew = createAsyncThunk<
     const res = await api.get(`/story/list/new`);
     return { message: res.data.message, stories: res.data.stories };
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Lấy danh sách truyện mới thất bại")
-    );
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Lấy danh sách truyện mới thất bại"));
   }
 });
 
@@ -92,9 +89,7 @@ export const getListStorySorted = createAsyncThunk<
     );
     return { message: res.data.message, stories: res.data.stories };
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Lấy danh sách truyện sắp xếp thất bại")
-    );
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Lấy danh sách truyện sắp xếp thất bại"));
   }
 });
 
@@ -107,9 +102,7 @@ export const getListStoryRecommend = createAsyncThunk<
     const res = await api.get(`/story/list/recommend`);
     return { message: res.data.message, stories: res.data.stories };
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Lấy danh sách truyện gợi ý thất bại")
-    );
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Lấy danh sách truyện gợi ý thất bại"));
   }
 });
 
@@ -125,9 +118,7 @@ export const getDetailStory = createAsyncThunk<
       story: res.data.story, // đã có chapters bên trong
     };
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Lấy chi tiết truyện thất bại")
-    );
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Lấy chi tiết truyện thất bại"));
   }
 });
 
@@ -152,8 +143,10 @@ export const createStory = createAsyncThunk<
         status,
         bannerImage,
       });
+      toast.success("Tạo truyện thành công");
       return { message: res.data.message, story: res.data.story };
     } catch (err) {
+      toast.error("Tạo truyện thất bại");
       return thunkAPI.rejectWithValue(getErrorMsg(err, "Tạo truyện thất bại"));
     }
   }
@@ -165,8 +158,10 @@ export const deleteStory = createAsyncThunk<
 >("story/delete", async ({ storyId }, thunkAPI) => {
   try {
     const res = await api.delete(`/story/delete/${storyId}`);
+      toast.success("Xóa truyện thành công");
     return { message: res.data.message, storyId: res.data.storyId };
   } catch (err) {
+      toast.error("Xóa truyện thất bại");
     return thunkAPI.rejectWithValue(getErrorMsg(err, "Xóa truyện thất bại"));
   }
 });
@@ -243,15 +238,16 @@ const storySlice = createSlice({
       });
     builder
       .addCase(getDetailStory.pending, (state) => {
-        state.loading = true;
+        state.loadingDetail = true;
         state.error = null;
+        state.story = null;
       })
       .addCase(getDetailStory.fulfilled, (state, action) => {
-        state.loading = false;
+        state.loadingDetail = false;
         state.story = action.payload.story;
       })
       .addCase(getDetailStory.rejected, (state, action) => {
-        state.loading = false;
+        state.loadingDetail = false;
         state.error = action.payload ?? null;
       });
     builder

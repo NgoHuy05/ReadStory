@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaBookOpen } from "react-icons/fa";
+
 export default function AuthLayout({
   children,
 }: {
@@ -13,8 +14,8 @@ export default function AuthLayout({
               href="/"
               className="flex items-center gap-3 cursor-pointer select-none"
             >
-              <div className="text-3xl">📚</div>
-              <h1 className="text-2xl font-semibold">Truyện Hay</h1>
+              <div className="text-3xl font-bold text-red-500"> <FaBookOpen /> </div>
+              <h1 className="text-2xl font-bold ">Truyện Hay</h1>
             </Link>
             <div className="flex gap-2 items-center text-white">
               <div className="text-lg font-medium">Welcome</div>

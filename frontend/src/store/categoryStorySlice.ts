@@ -1,12 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../lib/axios";
 import getErrorMsg from "../lib/getErrorMsg";
+import toast from "react-hot-toast";
+import { Category } from "./categorySlice";
+import { Story } from "./storySlice";
 
 interface CategoryStory {
   _id: string;
-  categoryId: string;
-  storyId: string;
+  categoryId: Category;
+  storyId: Story;
+  createdAt: string;
+  updatedAt: string;
 }
+
 interface CategoryStoryState {
     categoryStory: CategoryStory | null;
     listCategoryStory: CategoryStory[];
@@ -27,12 +33,23 @@ export const getListStoryCategory = createAsyncThunk<
     { rejectValue: string }
 >("categoryStory/list", async (_, thunkAPI) => {
     try {
-        const res = await api.get(`/categoryStory/list`);
+        const res = await api.get(`/storyCategory/list`);
         return { message: res.data.message, categoryStories: res.data.categoryStories };
     } catch (err) {
-        return thunkAPI.rejectWithValue(
-            getErrorMsg(err, "Lấy danh sách thể loại truyện thất bại")
-        );
+        return thunkAPI.rejectWithValue(getErrorMsg(err, "Lấy danh sách thể loại truyện thất bại"));
+    }
+});
+
+export const getListStoryCategoryBySlugCategory = createAsyncThunk<
+    { message: string; categoryStories: CategoryStory[] },
+    {slugCategory: string},
+    { rejectValue: string }
+>("categoryStory/listStory", async ({slugCategory}, thunkAPI) => {
+    try {
+        const res = await api.get(`/storyCategory/listStory/${slugCategory}`);
+        return { message: res.data.message, categoryStories: res.data.categoryStories };
+    } catch (err) {
+        return thunkAPI.rejectWithValue(getErrorMsg(err, "Lấy danh sách thể loại truyện thất bại"));
     }
 });
 
@@ -42,12 +59,12 @@ export const createCategoryStory = createAsyncThunk<
     { rejectValue: string }
 >("categoryStory/create", async ({ categoryId, storyId }, thunkAPI) => {
     try {
-        const res = await api.post(`/categoryStory/create`, { categoryId, storyId });
+        const res = await api.post(`/storyCategory/create`, { categoryId, storyId });
+        toast.success("Tạo thể loại truyện thành công");
         return { message: res.data.message, categoryStory: res.data.categoryStory };
     } catch (err) {
-        return thunkAPI.rejectWithValue(
-            getErrorMsg(err, "Tạo thể loại truyện thất bại")
-        );
+        toast.error("Tạo thể loại truyện thất bại");
+        return thunkAPI.rejectWithValue(getErrorMsg(err, "Tạo thể loại truyện thất bại"));
     }
 });
 
@@ -58,12 +75,12 @@ export const deleteCategoryStory = createAsyncThunk<
     { rejectValue: string }
 >("categoryStory/delete", async ({ categoryId, storyId }, thunkAPI) => {
     try {
-        const res = await api.delete(`/categoryStory/delete/${storyId}/${categoryId}`);
+        const res = await api.delete(`/storyCategory/delete/${storyId}/${categoryId}`);
+        toast.success("Xóa thể loại truyện thành công");
         return { message: res.data.message, categoryStoryId: res.data.categoryStoryId };
     } catch (err) {
-        return thunkAPI.rejectWithValue(
-            getErrorMsg(err, "Xóa thể loại truyện thất bại")
-        );
+        toast.error("Xóa thể loại truyện thất bại");
+        return thunkAPI.rejectWithValue(getErrorMsg(err, "Xóa thể loại truyện thất bại"));
     }
 });
 
@@ -82,6 +99,19 @@ export const categoryStorySlice = createSlice({
                 state.listCategoryStory = action.payload.categoryStories;
             })
             .addCase(getListStoryCategory.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload ?? null;
+            });
+        builder
+            .addCase(getListStoryCategoryBySlugCategory.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getListStoryCategoryBySlugCategory.fulfilled, (state, action) => {
+                state.loading = false;
+                state.listCategoryStory = action.payload.categoryStories;
+            })
+            .addCase(getListStoryCategoryBySlugCategory.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload ?? null;
             });

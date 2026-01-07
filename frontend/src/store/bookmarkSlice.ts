@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import getErrorMsg from "../lib/getErrorMsg";
 import api from "../lib/axios";
+import toast from "react-hot-toast";
 
 interface Bookmark {
   userId: string;
@@ -26,14 +27,14 @@ export const createBookmark = createAsyncThunk<
 >("bookmark/create", async (data, thunkAPI) => {
   try {
     const res = await api.post("/bookmark/create", data);
+    toast.success("Đã thêm vào mục yêu thích");
     return {
       message: res.data.message,
       bookmark: res.data.bookmark,
     };
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Tạo bookmark thất bại")
-    );
+    toast.error("Tạo bookmark thất bại");
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Tạo bookmark thất bại"));
   }
 });
 
@@ -44,11 +45,11 @@ export const deleteBookmark = createAsyncThunk<
 >("bookmark/delete", async ({ storyId }, thunkAPI) => {
   try {
     await api.delete(`/bookmark/${storyId}`);
+    toast.success("Đã xóa khỏi mục yêu thích");
     return storyId;
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Xóa bookmark thất bại")
-    );
+    toast.error("Xóa bookmark thất bại");
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Xóa bookmark thất bại"));
   }
 });
 

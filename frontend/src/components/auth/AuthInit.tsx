@@ -1,9 +1,9 @@
 "use client";
 
+import { AppDispatch, RootState } from "@/src/store";
+import { loadAuth } from "@/src/store/authSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store";
-import { loadAuth } from "../store/authSlice";
 
 export default function AuthInit() {
   const dispatch = useDispatch<AppDispatch>();
@@ -14,12 +14,6 @@ export default function AuthInit() {
       dispatch(loadAuth());
     }
   }, [initialized, dispatch]);
-  if (!initialized) {
-    return (
-      <div className="min-h-screen bg-[var(--main-bg)] text-white dark:bg-darkMode-800 py-4">
-        Loading...
-      </div>
-    );
-  }
+
   return null;
 }

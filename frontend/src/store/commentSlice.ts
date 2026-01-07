@@ -1,24 +1,32 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../lib/axios";
 import getErrorMsg from "../lib/getErrorMsg";
+import { User } from "./authSlice";
+import { Chapter } from "./chapterSlice";
+import { Story } from "./storySlice";
+import toast from "react-hot-toast";
 
 interface Comment {
   _id: string;
-  userId: string;
+  userId: User;
   storyId: string;
-  chapterId: string;
+  chapterId: Chapter | null;
   content: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface CommentState {
-  listComment: Comment[];
+  listCommentChapter: Comment[];
+  listCommentStory: Comment[];
   comment: Comment | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: CommentState = {
-  listComment: [],
+  listCommentChapter: [],
+  listCommentStory: [],
   comment: null,
   loading: false,
   error: null,
@@ -33,9 +41,7 @@ export const getListCommentByChapter = createAsyncThunk<
     const res = await api.get(`/comment/list/chapter/${slugChapter}`);
     return { message: res.data.message, comments: res.data.comments };
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Lấy danh sách bình luận thất bại")
-    );
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Lấy danh sách bình luận thất bại"));
   }
 });
 
@@ -48,15 +54,13 @@ export const getListCommentByStory = createAsyncThunk<
     const res = await api.get(`/comment/list/story/${slugStory}`);
     return { message: res.data.message, comments: res.data.comments };
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Lấy danh sách bình luận thất bại")
-    );
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Lấy danh sách bình luận thất bại"));
   }
 });
 
 export const createComment = createAsyncThunk<
   { message: string; comment: Comment },
-  { storyId: string; chapterId: string; content: string },
+  { storyId: string; chapterId: string | null; content: string },
   { rejectValue: string }
 >("comment/create", async ({ storyId, chapterId, content }, thunkAPI) => {
   try {
@@ -65,8 +69,10 @@ export const createComment = createAsyncThunk<
       chapterId,
       content,
     });
+    toast.success("Tạo bình luận thành công");
     return { message: res.data.message, comment: res.data.comment };
   } catch (err) {
+    toast.error("Tạo bình luận thất bại");
     return thunkAPI.rejectWithValue(getErrorMsg(err, "Tạo bình luận thất bại"));
   }
 });
@@ -78,8 +84,10 @@ export const deleteComment = createAsyncThunk<
 >("comment/delete", async ({ commentId }, thunkAPI) => {
   try {
     const res = await api.delete(`/comment/delete/${commentId}`);
+    toast.success("Xóa bình luận thành công");
     return { message: res.data.message, commentId };
   } catch (err) {
+    toast.error("Xóa bình luận thất bại");
     return thunkAPI.rejectWithValue(getErrorMsg(err, "Xóa bình luận thất bại"));
   }
 });
@@ -96,7 +104,7 @@ const commentSlice = createSlice({
       })
       .addCase(getListCommentByChapter.fulfilled, (state, action) => {
         state.loading = false;
-        state.listComment = action.payload.comments;
+        state.listCommentChapter = action.payload.comments;
       })
       .addCase(getListCommentByChapter.rejected, (state, action) => {
         state.loading = false;
@@ -109,7 +117,7 @@ const commentSlice = createSlice({
       })
       .addCase(getListCommentByStory.fulfilled, (state, action) => {
         state.loading = false;
-        state.listComment = action.payload.comments;
+        state.listCommentStory = action.payload.comments;
       })
       .addCase(getListCommentByStory.rejected, (state, action) => {
         state.loading = false;
@@ -123,7 +131,8 @@ const commentSlice = createSlice({
       .addCase(createComment.fulfilled, (state, action) => {
         state.loading = false;
         state.comment = action.payload.comment;
-        state.listComment.unshift(action.payload.comment);
+        state.listCommentStory.unshift(action.payload.comment);
+        state.listCommentChapter.unshift(action.payload.comment);
       })
       .addCase(createComment.rejected, (state, action) => {
         state.loading = false;
@@ -136,7 +145,7 @@ const commentSlice = createSlice({
       })
       .addCase(deleteComment.fulfilled, (state, action) => {
         state.loading = false;
-        state.listComment = state.listComment.filter(
+        state.listCommentStory = state.listCommentStory.filter(
           (c) => c._id !== action.payload.commentId
         );
       })

@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import getErrorMsg from "../lib/getErrorMsg";
 import api from "../lib/axios";
+import { Story } from "./storySlice";
+import toast from "react-hot-toast";
 
 export interface Chapter {
   _id: string;
-  storyId: string;
+  storyId: Story;
   title: string;
   content: string;
   chapterNumber: number;
@@ -29,20 +31,6 @@ const initialState: ChapterState = {
   error: null,
 };
 
-export const getListChapterByStory = createAsyncThunk<
-  { message: string; chapters: Chapter[] },
-  { slugStory: string },
-  { rejectValue: string }
->("chapter/list", async ({slugStory}, thunkAPI) => {
-  try {
-    const res = await api.get(`/chapter/list/${slugStory}`);
-    return { message: res.data.message, chapters: res.data.chapters };
-  } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Lấy danh sách chương của truyện thất bại")
-    );
-  }
-});
 
 export const getDetailChapter = createAsyncThunk<
   { message: string; chapter: Chapter },
@@ -53,9 +41,7 @@ export const getDetailChapter = createAsyncThunk<
     const res = await api.get(`/chapter/detail/${slugChapter}`);
     return { message: res.data.message, chapter: res.data.chapter };
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Lấy chi tiết chương thất bại")
-    );
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Lấy chi tiết chương thất bại"));
   }
 });
 
@@ -66,8 +52,10 @@ export const createChapter = createAsyncThunk<
 >("chapter/create", async (data, thunkAPI) => {
   try {
     const res = await api.post(`/chapter/create`, data);
+    toast.success("Tạo chương thành công");
     return { message: res.data.message, chapter: res.data.chapter };
   } catch (err) {
+    toast.error("Tạo chương thất bại");
     return thunkAPI.rejectWithValue(getErrorMsg(err, "Tạo chương thất bại"));
   }
 });
@@ -79,9 +67,10 @@ export const deleteChapter = createAsyncThunk<
 >("chapter/delete", async ({id}, thunkAPI) => {
   try {
     const res = await api.delete(`/chapter/delete/${id}`);
-;
+    toast.success("Xóa chương thành công");
     return { message: res.data.message, id };
   } catch (err) {
+    toast.error("Xóa chương thất bại");
     return thunkAPI.rejectWithValue(getErrorMsg(err, "Xóa chương thất bại"));
   }
 });
@@ -92,19 +81,6 @@ const chapterSlice = createSlice({
   reducers: {
   },
   extraReducers(builder) {
-    builder
-      .addCase(getListChapterByStory.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getListChapterByStory.fulfilled, (state, action) => {
-        state.loading = false;
-        state.listChapter = action.payload.chapters;
-      })
-      .addCase(getListChapterByStory.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload ?? null;
-      });
     builder
       .addCase(getDetailChapter.pending, (state) => {
         state.loading = true;

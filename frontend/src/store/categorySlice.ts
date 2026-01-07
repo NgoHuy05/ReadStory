@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import api from "../lib/axios"
 import getErrorMsg from "../lib/getErrorMsg"
+import toast from "react-hot-toast"
 
-interface Category {
+export interface Category {
   _id?: string
   name: string
   description: string
+  slug: string
 }
 
 interface CategoryState {
@@ -29,11 +31,9 @@ export const getListCategory = createAsyncThunk<
 >("category/list", async (_, thunkAPI) => {
   try {
     const res = await api.get("/category/list")
-    return res.data
+    return { message: res.data.message, category: res.data.category }
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Lấy danh sách category thất bại")
-    )
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Lấy danh sách category thất bại"))
   }
 })
 
@@ -44,11 +44,11 @@ export const createCategory = createAsyncThunk<
 >("category/create", async (data, thunkAPI) => {
   try {
     const res = await api.post("/category/create", data)
+    toast.success("Tạo category thành công")
     return res.data
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Tạo category thất bại")
-    )
+    toast.error("Tạo category thất bại")
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Tạo category thất bại"))
   }
 })
 
@@ -59,11 +59,11 @@ export const updateCategory = createAsyncThunk<
 >("category/update", async (data, thunkAPI) => {
   try {
     const res = await api.post(`/category/update/${data.id}`, data)
+    toast.success("Cập nhật category thành công")
     return res.data
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Update category thất bại")
-    )
+    toast.error("Update category thất bại")
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Update category thất bại"))
   }
 })
 
@@ -74,11 +74,11 @@ export const deleteCategory = createAsyncThunk<
 >("category/delete", async ({ id }, thunkAPI) => {
   try {
     const res = await api.delete(`/category/delete/${id}`)
+    toast.success("Xóa category thành công")
     return { message: res.data.message, id }
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      getErrorMsg(err, "Xóa category thất bại")
-    )
+    toast.error("Xóa category thất bại")
+    return thunkAPI.rejectWithValue(getErrorMsg(err, "Xóa category thất bại"))
   }
 })
 
