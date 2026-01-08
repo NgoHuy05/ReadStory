@@ -16,7 +16,7 @@ import SkeletonStoryDetail from "@/src/components/skeleton/SkeletonStoryDetail";
 const Story = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const { story, loading } = useSelector((state: RootState) => state.story);
+  const { story, status } = useSelector((state: RootState) => state.story);
   const { listCommentStory } = useSelector((state: RootState) => state.comment);
   const { slugStory } = useParams<{ slugStory: string }>();
   const [showAll, setShowAll] = useState(false);
@@ -37,7 +37,7 @@ const Story = () => {
     dispatch(getListCommentByStory({ slugStory }));
   }, [dispatch, slugStory]);
 
-  if (!story || loading) {
+  if (status === "idle" || status === "loading") {
     return <><SkeletonStoryDetail /> </>
   }
 

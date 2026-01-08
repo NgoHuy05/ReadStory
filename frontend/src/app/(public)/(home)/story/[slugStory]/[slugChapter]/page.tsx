@@ -22,7 +22,7 @@ const Chapter = () => {
     slugChapter: string;
   }>();
   const dispatch = useDispatch<AppDispatch>();
-  const { chapter, loading } = useSelector((state: RootState) => state.chapter);
+  const { chapter, status } = useSelector((state: RootState) => state.chapter);
   const { listCommentChapter } = useSelector(
     (state: RootState) => state.comment
   );
@@ -51,7 +51,7 @@ const Chapter = () => {
     setContent("");
   };
 
-  if(loading || !chapter) {
+  if (status === "idle" || status === "loading") {
     return <> <SkeletonChapter /> </>
   }
 

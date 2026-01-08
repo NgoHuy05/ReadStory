@@ -19,7 +19,7 @@ const Home = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { listStoryHot, listStoryNew, listStoryRecommend } = useSelector(
+  const { listStoryHot, listStoryNew, listStoryRecommend, status } = useSelector(
     (state: RootState) => state.story
   );
 
@@ -30,9 +30,7 @@ const Home = () => {
   }, [dispatch]);
 
   if (
-    listStoryHot.length === 0 ||
-    listStoryNew.length === 0 ||
-    listStoryRecommend.length === 0
+    status === "idle" || status === "loading"
   ) {
     return (
       <>

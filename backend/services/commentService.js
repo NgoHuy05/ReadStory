@@ -9,6 +9,7 @@ export const getListCommentByChapterService = async (slugChapter) => {
 
   const comments = await Comment.find({ chapterId: chapter._id })
     .populate("userId", "displayName avtUrl")
+    .sort({ createdAt: -1 })
     .lean();
 
   return comments;
@@ -20,6 +21,8 @@ export const getListCommentByStoryService = async (slugStory) => {
 
   const comments = await Comment.find({ storyId: story._id })
     .populate("userId", "displayName avtUrl")
+    .populate("chapterId", "chapterNumber")
+    .sort({ createdAt: -1 })
     .lean();
 
   return comments;
@@ -27,7 +30,12 @@ export const getListCommentByStoryService = async (slugStory) => {
 
 export const createCommentService = async ({ userId, storyId, chapterId, content }) => {
   const comment = await Comment.create({ userId, storyId, chapterId, content });
-  return comment;
+  const populatedComment = await Comment.findById(comment._id)
+    .populate("userId", "displayName avtUrl")
+    .populate("chapterId", "chapterNumber")
+    .lean();
+
+  return populatedComment;
 };
 
 export const deleteCommentService = async (userId, commentId) => {

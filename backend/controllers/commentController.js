@@ -28,7 +28,7 @@ export const getListCommentByStory = async (req, res, next) => {
 export const createComment = async (req, res, next) => {
   try {
     const userId = req.user._id;
-    const { storyId, chapterId = null, content } = req.body;
+    const { storyId, chapterId , content } = req.body;
     const comment = await createCommentService({ userId, storyId, chapterId, content });
     return res.status(201).json({ message: "Tạo comment thành công", comment });
   } catch (err) {

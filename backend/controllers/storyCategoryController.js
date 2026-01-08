@@ -1,13 +1,24 @@
 import {
   getListStoryCategoryService,
   createStoryCategoryService,
-  deleteStoryCategoryService
+  deleteStoryCategoryService,
+  getListStoryCategoryBySlugCategoryService
 } from "../services/storyCategoryService.js";
 
 export const getListStoryCategory = async (req, res, next) => {
   try {
     const categoryStories = await getListStoryCategoryService();
     res.status(200).json({ message: "Lấy danh sách storyCategory thành công", categoryStories });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getListStoryCategoryBySlugCategory = async (req, res, next) => {
+  try {
+    const { slugCategory } = req.params;
+    const categoryStories = await getListStoryCategoryBySlugCategoryService(slugCategory);
+    res.status(200).json({ message: "Lấy danh sách storyCategory theo slug thành công", categoryStories });
   } catch (err) {
     next(err);
   }

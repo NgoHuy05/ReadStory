@@ -1,22 +1,9 @@
 import {
-  getListChapterByStoryService,
   getDetailChapterService,
   createChapterService,
   deleteChapterService,
 } from "../services/chapterService.js";
 
-export const getListChapterByStory = async (req, res, next) => {
-  try {
-    const slugStory = req.params.slugStory;
-    const chapters = await getListChapterByStoryService(slugStory);
-    return res.status(200).json({
-      message: "Lấy danh sách chương thành công",
-      chapters,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
 
 export const getDetailChapter = async (req, res, next) => {
   try {

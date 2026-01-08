@@ -3,6 +3,8 @@ import api from "../lib/axios";
 import getErrorMsg from "../lib/getErrorMsg";
 import toast from "react-hot-toast";
 
+export type Status = "idle" | "loading" | "success" | "error";
+
 export interface User {
   _id: string;
   username: string;
@@ -14,15 +16,15 @@ export interface User {
 export interface AuthState {
   accessToken?: string | null;
   user: User | null;
-  loading: boolean;
   error: string | null;
   initialized: boolean;
+  status: Status;
 }
 
 const initialState: AuthState = {
   accessToken: null,
   user: null,
-  loading: false,
+  status: "idle",
   error: null,
   initialized: false,
 };
@@ -112,7 +114,9 @@ export const loadAuth = createAsyncThunk<void, void, { rejectValue: string }>(
       await thunkAPI.dispatch(refreshToken()).unwrap();
       await thunkAPI.dispatch(getProfile()).unwrap();
     } catch (err) {
-      return thunkAPI.rejectWithValue(getErrorMsg(err, "Khởi tạo auth thất bại"));
+      return thunkAPI.rejectWithValue(
+        getErrorMsg(err, "Khởi tạo auth thất bại")
+      );
     }
   }
 );
@@ -124,29 +128,29 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
-        state.loading = true;
+        state.status = "loading";
         state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "success";
         state.user = action.payload.user;
         state.accessToken = action.payload.accessToken;
       })
       .addCase(login.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "error";
         state.error = action.payload || null;
       });
 
     builder
       .addCase(register.pending, (state) => {
-        state.loading = true;
+        state.status = "loading";
         state.error = null;
       })
       .addCase(register.fulfilled, (state) => {
-        state.loading = false;
+        state.status = "success";
       })
       .addCase(register.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "error";
         state.error = action.payload || null;
       });
 
@@ -154,47 +158,47 @@ const authSlice = createSlice({
       state.user = null;
       state.accessToken = null;
       state.error = null;
-      state.loading = false;
+      state.status = "success";
       state.initialized = true;
     });
 
     builder
       .addCase(refreshToken.pending, (state) => {
-        state.loading = false;
+        state.status = "loading";
       })
       .addCase(refreshToken.fulfilled, (state, action) => {
         state.accessToken = action.payload.accessToken;
-        state.loading = false;
+        state.status = "success";
       })
       .addCase(refreshToken.rejected, (state) => {
         state.accessToken = null;
         state.user = null;
-        state.loading = false;
+        state.status = "error";
       });
     builder
       .addCase(getProfile.pending, (state) => {
-        state.loading = true;
+        state.status = "loading";
       })
       .addCase(getProfile.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "success";
         state.user = action.payload;
       })
       .addCase(getProfile.rejected, (state) => {
-        state.loading = false;
+        state.status = "error";
         state.user = null;
         state.accessToken = null;
       });
     builder
       .addCase(loadAuth.pending, (state) => {
-        state.loading = true;
+        state.status = "loading";
         state.error = null;
       })
       .addCase(loadAuth.fulfilled, (state) => {
-        state.loading = false;
+        state.status = "success";
         state.initialized = true;
       })
       .addCase(loadAuth.rejected, (state) => {
-        state.loading = false;
+        state.status = "error";
         state.user = null;
         state.accessToken = null;
         state.initialized = true;

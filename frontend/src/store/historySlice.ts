@@ -3,7 +3,7 @@ import getErrorMsg from "../lib/getErrorMsg";
 import api from "../lib/axios";
 import toast from "react-hot-toast";
 
-interface History {
+export interface History {
   _id: string;
   userId: string;
   storyId: string;

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import api from "../lib/axios"
 import getErrorMsg from "../lib/getErrorMsg"
 import toast from "react-hot-toast"
+import { Status } from "./authSlice"
 
 export interface Category {
   _id?: string
@@ -11,17 +12,17 @@ export interface Category {
 }
 
 interface CategoryState {
-  loading: boolean
   error: string | null
   listCategory: Category[]
   category: Category | null
+  status: Status
 }
 
 const initialState: CategoryState = {
-  loading: false,
   error: null,
   listCategory: [],
-  category: null
+  category: null,
+  status: "idle"
 }
 
 export const getListCategory = createAsyncThunk<
@@ -89,36 +90,38 @@ const categorySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getListCategory.pending, (state) => {
-        state.loading = true
+        state.status= "loading"
         state.error = null
       })
       .addCase(getListCategory.fulfilled, (state, action) => {
-        state.loading = false
+        state.status = "success"
         state.listCategory = action.payload.category
       })
       .addCase(getListCategory.rejected, (state, action) => {
-        state.loading = false
+        state.status = "error";
         state.error = action.payload ?? null
       })
 
       .addCase(createCategory.pending, (state) => {
-        state.loading = true
+        state.status= "loading"
+
       })
       .addCase(createCategory.fulfilled, (state, action) => {
-        state.loading = false
+        state.status = "success"
         state.listCategory.unshift(action.payload.category)
         state.category = action.payload.category
       })
       .addCase(createCategory.rejected, (state, action) => {
-        state.loading = false
+        state.status = "error";
         state.error = action.payload ?? null
       })
 
       .addCase(updateCategory.pending, (state) => {
-        state.loading = true
+        state.status= "loading"
+
       })
       .addCase(updateCategory.fulfilled, (state, action) => {
-        state.loading = false
+        state.status = "success"
         state.listCategory = state.listCategory.map((c) =>
           c._id === action.payload.category._id
             ? action.payload.category
@@ -127,22 +130,23 @@ const categorySlice = createSlice({
         state.category = action.payload.category
       })
       .addCase(updateCategory.rejected, (state, action) => {
-        state.loading = false
+        state.status = "error";
         state.error = action.payload ?? null
       })
 
       .addCase(deleteCategory.pending, (state) => {
-        state.loading = true
+        state.status= "loading"
+
       })
       .addCase(deleteCategory.fulfilled, (state, action) => {
-        state.loading = false
+        state.status = "success"
         state.listCategory = state.listCategory.filter(
           (c) => c._id !== action.payload.id
         )
         state.category = null
       })
       .addCase(deleteCategory.rejected, (state, action) => {
-        state.loading = false
+        state.status = "error";
         state.error = action.payload ?? null
       })
   }

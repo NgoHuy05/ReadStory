@@ -3,6 +3,7 @@ import api from "../lib/axios";
 import getErrorMsg from "../lib/getErrorMsg";
 import { Chapter } from "./chapterSlice";
 import toast from "react-hot-toast";
+import { Status } from "./authSlice";
 
 export interface Story {
   _id: string;
@@ -25,9 +26,9 @@ interface StoryState {
   listStoryNew: Story[];
   listStoryHot: Story[];
   listStoryRecommend: Story[];
-  loading: boolean;
   loadingDetail: boolean;
   error: string | null;
+  status: Status
 }
 const initialState: StoryState = {
   story: null,
@@ -35,9 +36,9 @@ const initialState: StoryState = {
   listStoryNew: [],
   listStoryHot: [],
   listStoryRecommend: [],
-  loading: false,
   loadingDetail: false,
   error: null,
+  status: "idle"
 };
 export const getListStory = createAsyncThunk<
   { message: string; stories: Story[] },
@@ -186,54 +187,54 @@ const storySlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getListStory.pending, (state) => {
-        state.loading = true;
+        state.status = "loading";
         state.error = null;
       })
       .addCase(getListStory.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "success";
         state.listStory = action.payload.stories;
       })
       .addCase(getListStory.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "error";
         state.error = action.payload ?? null;
       });
     builder
       .addCase(getListStoryHot.pending, (state) => {
-        state.loading = true;
+        state.status = "loading";
         state.error = null;
       })
       .addCase(getListStoryHot.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "success";
         state.listStoryHot = action.payload.stories;
       })
       .addCase(getListStoryHot.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "error";
         state.error = action.payload ?? null;
       });
     builder
       .addCase(getListStoryNew.pending, (state) => {
-        state.loading = true;
+        state.status = "loading";
         state.error = null;
       })
       .addCase(getListStoryNew.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "success";
         state.listStoryNew = action.payload.stories;
       })
       .addCase(getListStoryNew.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "error";
         state.error = action.payload ?? null;
       });
     builder
       .addCase(getListStoryRecommend.pending, (state) => {
-        state.loading = true;
+        state.status = "loading";
         state.error = null;
       })
       .addCase(getListStoryRecommend.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "success";
         state.listStoryRecommend = action.payload.stories;
       })
       .addCase(getListStoryRecommend.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "error";
         state.error = action.payload ?? null;
       });
     builder
@@ -243,7 +244,7 @@ const storySlice = createSlice({
         state.story = null;
       })
       .addCase(getDetailStory.fulfilled, (state, action) => {
-        state.loadingDetail = false;
+        state.status = "success";
         state.story = action.payload.story;
       })
       .addCase(getDetailStory.rejected, (state, action) => {
@@ -252,43 +253,43 @@ const storySlice = createSlice({
       });
     builder
       .addCase(createStory.pending, (state) => {
-        state.loading = true;
+        state.status = "loading";
         state.error = null;
       })
       .addCase(createStory.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "success";
         state.story = action.payload.story;
       })
       .addCase(createStory.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "error";
         state.error = action.payload ?? null;
       });
     builder
       .addCase(deleteStory.pending, (state) => {
-        state.loading = true;
+        state.status = "loading";
         state.error = null;
       })
       .addCase(deleteStory.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "success";
         state.listStory = state.listStory.filter(
           (story) => story._id !== action.payload.storyId
         );
       })
       .addCase(deleteStory.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "error";
         state.error = action.payload ?? null;
       });
     builder
       .addCase(searchStory.pending, (state) => {
-        state.loading = true;
+        state.status = "loading";
         state.error = null;
       })
       .addCase(searchStory.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "success";
         state.listStory = action.payload.stories;
       })
       .addCase(searchStory.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "error";
         state.error = action.payload ?? null;
       });
   },

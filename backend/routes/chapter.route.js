@@ -1,8 +1,7 @@
 import express from "express";
-import { createChapter, deleteChapter, getDetailChapter, getListChapterByStory } from "../controllers/chapterController.js";
+import { createChapter, deleteChapter, getDetailChapter } from "../controllers/chapterController.js";
 const router = express.Router();
 
-router.get('/list/:slugStory', getListChapterByStory);
 router.get('/detail/:slugChapter', getDetailChapter);
 
 router.post('/create', createChapter);

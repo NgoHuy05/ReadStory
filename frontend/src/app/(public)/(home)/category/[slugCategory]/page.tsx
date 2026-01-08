@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 const CategoryPage = () => {
   const { slugCategory } = useParams<{ slugCategory: string }>();
   const dispatch = useDispatch<AppDispatch>();
-  const { listCategoryStory, loading } = useSelector(
+  const { listCategoryStory, status } = useSelector(
     (state: RootState) => state.categoryStory
   );
   const router = useRouter();
@@ -21,13 +21,11 @@ const CategoryPage = () => {
   }, [dispatch, slugCategory]);
 
   console.log("listCategoryStory", listCategoryStory);
-  // 1️⃣ ĐANG FETCH → skeleton
-  if (loading) {
+  if (status === "idle" || status === "loading") {
     return <SkeletonCategory />
   }
 
-  // 2️⃣ FETCH XONG nhưng KHÔNG CÓ DATA
-  if (!loading && listCategoryStory.length === 0) {
+  if (status === "success" && listCategoryStory.length === 0) {
     return (
       <main className="max-w-7xl mx-auto px-4 py-8">
         <h2 className="text-center text-xl text-white font-semibold">

@@ -4,8 +4,9 @@ import getErrorMsg from "../lib/getErrorMsg";
 import toast from "react-hot-toast";
 import { Category } from "./categorySlice";
 import { Story } from "./storySlice";
+import { Status } from "./authSlice";
 
-interface CategoryStory {
+export interface CategoryStory {
   _id: string;
   categoryId: Category;
   storyId: Story;
@@ -16,14 +17,14 @@ interface CategoryStory {
 interface CategoryStoryState {
     categoryStory: CategoryStory | null;
     listCategoryStory: CategoryStory[];
-    loading: boolean;
     error: string | null;
+    status: Status
 }
 
 const initialState: CategoryStoryState = {
     categoryStory: null,
     listCategoryStory: [],
-    loading: false,
+    status: "idle",
     error: null,
 };
 
@@ -91,56 +92,56 @@ export const categoryStorySlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(getListStoryCategory.pending, (state) => {
-                state.loading = true;
+                state.status = "loading"
                 state.error = null;
             })
             .addCase(getListStoryCategory.fulfilled, (state, action) => {
-                state.loading = false;
+                state.status = "success";
                 state.listCategoryStory = action.payload.categoryStories;
             })
             .addCase(getListStoryCategory.rejected, (state, action) => {
-                state.loading = false;
+                state.status = "error";
                 state.error = action.payload ?? null;
             });
         builder
             .addCase(getListStoryCategoryBySlugCategory.pending, (state) => {
-                state.loading = true;
+                state.status = "loading"
                 state.error = null;
             })
             .addCase(getListStoryCategoryBySlugCategory.fulfilled, (state, action) => {
-                state.loading = false;
+                state.status = "success";
                 state.listCategoryStory = action.payload.categoryStories;
             })
             .addCase(getListStoryCategoryBySlugCategory.rejected, (state, action) => {
-                state.loading = false;
+                state.status = "error";
                 state.error = action.payload ?? null;
             });
         builder
             .addCase(createCategoryStory.pending, (state) => {
-                state.loading = true;
+                state.status = "loading"
                 state.error = null;
             })
             .addCase(createCategoryStory.fulfilled, (state, action) => {
-                state.loading = false;
+                state.status = "success";
                 state.categoryStory = action.payload.categoryStory;
             })
             .addCase(createCategoryStory.rejected, (state, action) => {
-                state.loading = false;
+                state.status = "error";
                 state.error = action.payload ?? null;
             });
         builder
             .addCase(deleteCategoryStory.pending, (state) => {
-                state.loading = true;
+                state.status = "loading"
                 state.error = null;
             })
             .addCase(deleteCategoryStory.fulfilled, (state, action) => {
-                state.loading = false;
+                state.status = "success";
                 state.listCategoryStory = state.listCategoryStory.filter(
                     (cs) => cs._id !== action.payload.categoryStoryId
                 );
             })
             .addCase(deleteCategoryStory.rejected, (state, action) => {
-                state.loading = false;
+                state.status = "error";
                 state.error = action.payload ?? null;
             });
     },

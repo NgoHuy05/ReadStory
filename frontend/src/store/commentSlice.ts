@@ -3,10 +3,9 @@ import api from "../lib/axios";
 import getErrorMsg from "../lib/getErrorMsg";
 import { User } from "./authSlice";
 import { Chapter } from "./chapterSlice";
-import { Story } from "./storySlice";
 import toast from "react-hot-toast";
 
-interface Comment {
+export interface Comment {
   _id: string;
   userId: User;
   storyId: string;

@@ -3,7 +3,7 @@ import getErrorMsg from "../lib/getErrorMsg";
 import api from "../lib/axios";
 import toast from "react-hot-toast";
 
-interface Bookmark {
+export interface Bookmark {
   userId: string;
   storyId: string;
 }

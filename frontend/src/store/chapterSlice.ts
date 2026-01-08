@@ -3,6 +3,7 @@ import getErrorMsg from "../lib/getErrorMsg";
 import api from "../lib/axios";
 import { Story } from "./storySlice";
 import toast from "react-hot-toast";
+import { Status } from "./authSlice";
 
 export interface Chapter {
   _id: string;
@@ -20,14 +21,14 @@ export interface Chapter {
 interface ChapterState {
   chapter: Chapter | null;
   listChapter: Chapter[];
-  loading: boolean;
   error: string | null;
+  status: Status
 }
 
 const initialState: ChapterState = {
   chapter: null,
   listChapter: [],
-  loading: false,
+  status: "idle",
   error: null,
 };
 
@@ -83,42 +84,42 @@ const chapterSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getDetailChapter.pending, (state) => {
-        state.loading = true;
+        state.status = "loading"
         state.error = null;
       })
       .addCase(getDetailChapter.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "success"
         state.chapter = action.payload.chapter;
       })
       .addCase(getDetailChapter.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "error"
         state.error = action.payload ?? null;
       });
     builder
       .addCase(createChapter.pending, (state) => {
-        state.loading = true;
+        state.status = "loading"
         state.error = null;
       })
       .addCase(createChapter.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "success"
         state.chapter = action.payload.chapter;
         state.listChapter.unshift(action.payload.chapter)
       })
       .addCase(createChapter.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "error"
         state.error = action.payload ?? null;
       });
     builder
       .addCase(deleteChapter.pending, (state) => {
-        state.loading = true;
+        state.status = "loading"
         state.error = null;
       })
       .addCase(deleteChapter.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "success"
         state.listChapter = state.listChapter.filter((c) => c._id !== action.payload.id)
       })
       .addCase(deleteChapter.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "error"
         state.error = action.payload ?? null;
       })
   },

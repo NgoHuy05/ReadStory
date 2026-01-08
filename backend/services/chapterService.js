@@ -2,19 +2,13 @@ import Chapter from "../models/chapterModel.js";
 import Story from "../models/storyModel.js";
 import { BadRequestError, NotFoundError } from "../utils/errors/index.js";
 
-export const getListChapterByStoryService = async (slugStory) => {
-  const story = await Story.findOne({ slug: slugStory });
-  if (!story) throw new NotFoundError("Story không tồn tại");
-
-  const chapters = await Chapter.find({ storyId: story._id }).lean();
-  if (chapters.length === 0) throw new NotFoundError("Không có chương nào");
-
-  return chapters;
-};
 
 export const getDetailChapterService = async (slugChapter) => {
-  const chapter = await Chapter.findOne({ slug: slugChapter });
+  const chapter = await Chapter.findOne({ slug: slugChapter })
+  .populate("storyId")
+  .lean();
   if (!chapter) throw new NotFoundError("Không tìm thấy chương");
+
 
   return chapter;
 };
